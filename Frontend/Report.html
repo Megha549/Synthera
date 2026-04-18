@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthera — Lab Report</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="report">
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌸</div>
+      Synthera
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+    </div>
+  </nav>
+
+  <div class="page-wrapper" style="align-items:flex-start; max-width:780px; margin:0 auto;">
+    <div style="width:100%; padding-top:80px;">
+
+      <!-- Progress -->
+      <div class="progress-info">
+        <span>Step 3 of 4 — Lab Report</span>
+        <span>75%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:75%"></div>
+      </div>
+
+      <div class="chat-wrapper" style="margin-bottom:28px;">
+        <div class="chat-bubble">
+          <strong>Ab lab report ki bari 🧪</strong><br>
+          <span style="font-size:14px; opacity:0.8">Agar aapke paas koi blood test ya thyroid test ki report hai — woh upload karein ya values manually bhar dein. <strong>Yeh completely optional hai</strong> — report nahi hai toh seedha next step pe ja sakti hain.</span>
+        </div>
+      </div>
+
+      <!-- Important note about report parsing -->
+      <div class="behavioral-note" style="margin-bottom:28px;">
+        <strong>⚠️ Zaroori Jankari — Report Upload ke baare mein:</strong>
+        Hum sirf specific lab reports accept karte hain — CBC (Complete Blood Count), Thyroid Function Test (TFT/TSH/T3/T4), ya Hormone Panel (FSH, LH, AMH). 
+        Koi aur report upload karne se error aayega. Agar aapke paas yeh reports nahi hain — toh neeche values manually bharo ya skip karo.
+      </div>
+
+      <!-- Upload or manual toggle -->
+      <div style="display:flex; gap:12px; margin-bottom:28px; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="showSection('upload-section')" id="tab-upload">
+          📄 Report Upload Karo
+        </button>
+        <button class="btn btn-outline" onclick="showSection('manual-section')" id="tab-manual">
+          ✏️ Values Khud Bharo
+        </button>
+        <button class="btn btn-soft" onclick="skipReport()">
+          ⏭️ Skip — Report Nahi Hai
+        </button>
+      </div>
+
+      <!-- UPLOAD SECTION -->
+      <div id="upload-section">
+        <div class="upload-area" id="upload-zone" onclick="document.getElementById('file-input').click()"
+             ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
+          <div class="upload-icon">📋</div>
+          <h3>Report yahan drag karo ya click karke upload karo</h3>
+          <p style="margin-top:8px;">Sirf PDF ya image file (JPG, PNG) — max 5MB</p>
+          <p style="margin-top:6px; font-size:12px; color:var(--rose);">
+            ✅ Accept: CBC, TFT, TSH, T3/T4, Hormone Panel<br>
+            ❌ Not accepted: X-ray, USG, prescriptions, general health checkup
+          </p>
+          <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this)">
+        </div>
+
+        <!-- Upload progress -->
+        <div id="upload-progress" class="hidden" style="margin-top:20px;">
+          <div style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--rose-pale); border-radius:var(--radius-sm);">
+            <span id="upload-icon" style="font-size:24px;">⏳</span>
+            <div>
+              <div id="upload-status" style="font-weight:600; font-size:14px;">Report upload ho rahi hai...</div>
+              <div id="upload-detail" style="font-size:12px; color:var(--muted);">Please wait</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parsed results -->
+        <div id="parsed-results" class="hidden" style="margin-top:20px;">
+          <div style="background:var(--sage-light); border-radius:var(--radius); padding:20px; border-left:4px solid var(--sage);">
+            <h3 style="font-size:16px; margin-bottom:16px; color:var(--sage);">✅ Report se yeh values mili hain:</h3>
+            <div id="parsed-values-display"></div>
+          </div>
+          <div class="behavioral-note" style="margin-top:12px;">
+            <strong>⚠️ Check karo:</strong> Kya yeh values sahi hain? Agar koi galat lag raha hai toh neeche manually bharo.
+          </div>
+        </div>
+
+        <!-- Error state -->
+        <div id="upload-error" class="hidden" style="margin-top:20px;">
+          <div style="background:#FFEBEE; border-radius:var(--radius-sm); padding:16px; border-left:4px solid #E53935;">
+            <h3 style="font-size:15px; color:#C62828; margin-bottom:8px;">❌ Report parse nahi ho payi</h3>
+            <p style="font-size:13px; color:#B71C1C;" id="error-message">
+              Yeh report recognize nahi hui. Kripya sirf CBC, TFT, ya Hormone Panel upload karein, ya values manually bharein.
+            </p>
+            <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="showSection('manual-section')">
+              ✏️ Manually Values Bharo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MANUAL SECTION -->
+      <div id="manual-section" class="hidden">
+        <div style="background:var(--rose-pale); border-radius:var(--radius); padding:20px; margin-bottom:24px;">
+          <p style="font-size:13px; color:var(--muted);">
+            ℹ️ Sirf woh values bharo jo aapke paas hain — baaki chhor do. Sab kuch optional hai. Values apni report mein dekhein aur wahan se copy karein.
+          </p>
+        </div>
+
+        <!-- Thyroid Section -->
+        <div class="question-card">
+          <div class="q-label">🦋 Thyroid Tests</div>
+          <div class="q-why"><span>ℹ️</span> TSH (Thyroid Stimulating Hormone) — normal range: 0.4 to 4.0 mIU/L</div>
+          <button class="q-meaning-btn" onclick="toggleHelp('help-thyroid')">🤔 Yeh tests kaise pehchanu?</button>
+          <div class="q-meaning-box hidden" id="help-thyroid">
+            <strong>Report mein kya dhundhein:</strong><br>
+            • <strong>TSH</strong> — "Thyroid Stimulating Hormone" likhaa hoga. Normal: 0.4-4.0<br>
+            • <strong>T3</strong> — "Triiodothyronine". Normal: 2.3-4.2<br>
+            • <strong>T4</strong> — "Thyroxine". Normal: 0.8-1.8<br>
+            Agar report mein "mIU/L" ya "ng/dL" likha ho toh wahi wali values yahan bharein.
+          </div>
+
+          <div class="input-row" style="margin-top:16px;">
+            <div class="input-group">
+              <label>TSH <span class="label-hint">(mIU/L) — Sabse important</span></label>
+              <input type="number" step="0.01" id="tsh" placeholder="Jaise: 2.5" oninput="updateLabValue('tsh', this.value)">
+            </div>
+            <div class="input-group">
+              <label>T3 <span class="label-hint">(pg/mL)</span></label>
+              <input type="number" step="0.01" id="t3" placeholder="Jaise: 3.1" oninput="updateLabValue('t3', this.value)">
+            </div>
+            <div class="input-group">
+              <label>T4 / Free T4 <span class="label-hint">(ng/dL)</span></label>
+              <input type="number" step="0.01" id="t4" placeholder="Jaise: 1.1" oninput="updateLabValue('t4', this.value)">
+            </div>
+          </div>
+
+          <!-- Live interpretation -->
+          <div id="tsh-interpretation" class="hidden" style="margin-top:8px; padding:10px 14px; border-radius:var(--radius-sm); font-size:13px;"></div>
+        </div>
+
+        <!-- Blood / CBC Section -->
+        <div class="question-card">
+          <div class="q-label">🩸 Blood Tests (CBC)</div>
+          <div class="q-why"><span>ℹ️</span> Hemoglobin se anemia pata chalta hai — women ke liye normal: 12.0-16.0 g/dL</div>
+          <button class="q-meaning-btn" onclick="toggleHelp('help-cbc')">🤔 CBC mein kya hota hai?</button>
+          <div class="q-meaning-box hidden" id="help-cbc">
+            <strong>CBC (Complete Blood Count) report mein dhundhein:</strong><br>
+            • <strong>Hb / Hemoglobin</strong> — "g/dL" mein hoga. Women ke liye normal 12-16<br>
+            • <strong>MCV</strong> — Red blood cells ki size. Normal: 80-100 fL<br>
+            • <strong>Serum Ferritin</strong> — Iron store. Normal: 15-150 ng/mL<br>
+            • <strong>TIBC</strong> — Total Iron Binding Capacity<br>
+            Yeh values aksar "Haematology" section mein milti hain.
+          </div>
+
+          <div class="input-row" style="margin-top:16px;">
+            <div class="input-group">
+              <label>Hemoglobin (Hb) <span class="label-hint">(g/dL) — Sabse important</span></label>
+              <input type="number" step="0.1" id="hemoglobin" placeholder="Jaise: 11.5" oninput="updateLabValue('hemoglobin', this.value)">
+            </div>
+            <div class="input-group">
+              <label>Serum Ferritin <span class="label-hint">(ng/mL)</span></label>
+              <input type="number" step="0.1" id="ferritin" placeholder="Jaise: 25" oninput="updateLabValue('ferritin', this.value)">
+            </div>
+            <div class="input-group">
+              <label>MCV <span class="label-hint">(fL)</span></label>
+              <input type="number" step="0.1" id="mcv" placeholder="Jaise: 85" oninput="updateLabValue('mcv', this.value)">
+            </div>
+            <div class="input-group">
+              <label>TIBC <span class="label-hint">(μg/dL) — optional</span></label>
+              <input type="number" step="0.1" id="tibc" placeholder="Jaise: 380" oninput="updateLabValue('tibc', this.value)">
+            </div>
+          </div>
+
+          <div id="hb-interpretation" class="hidden" style="margin-top:8px; padding:10px 14px; border-radius:var(--radius-sm); font-size:13px;"></div>
+        </div>
+
+        <!-- Hormone Section -->
+        <div class="question-card">
+          <div class="q-label">🌀 Hormone Tests (PCOS ke liye)</div>
+          <div class="q-why"><span>ℹ️</span> LH/FSH ratio aur testosterone PCOS diagnose karne mein help karte hain</div>
+          <button class="q-meaning-btn" onclick="toggleHelp('help-hormones')">🤔 Yeh tests kahan milte hain report mein?</button>
+          <div class="q-meaning-box hidden" id="help-hormones">
+            <strong>Hormone Panel / Fertility Panel mein dhundhein:</strong><br>
+            • <strong>LH</strong> — Luteinizing Hormone (mIU/mL)<br>
+            • <strong>FSH</strong> — Follicle Stimulating Hormone (mIU/mL)<br>
+            • <strong>AMH</strong> — Anti-Mullerian Hormone (ng/mL)<br>
+            • <strong>Testosterone</strong> — Total Testosterone (ng/dL)<br>
+            • <strong>Prolactin</strong> — (ng/mL)<br>
+            Yeh tests aksar gynecologist recommend karte hain.
+          </div>
+
+          <div class="input-row" style="margin-top:16px;">
+            <div class="input-group">
+              <label>LH <span class="label-hint">(mIU/mL)</span></label>
+              <input type="number" step="0.01" id="lh" placeholder="Jaise: 8.5" oninput="updateLabValue('lh', this.value)">
+            </div>
+            <div class="input-group">
+              <label>FSH <span class="label-hint">(mIU/mL)</span></label>
+              <input type="number" step="0.01" id="fsh" placeholder="Jaise: 5.2" oninput="updateLabValue('fsh', this.value)">
+            </div>
+            <div class="input-group">
+              <label>AMH <span class="label-hint">(ng/mL)</span></label>
+              <input type="number" step="0.01" id="amh" placeholder="Jaise: 2.1" oninput="updateLabValue('amh', this.value)">
+            </div>
+            <div class="input-group">
+              <label>Testosterone <span class="label-hint">(ng/dL)</span></label>
+              <input type="number" step="0.1" id="testosterone" placeholder="Jaise: 45" oninput="updateLabValue('testosterone', this.value)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Blood Sugar -->
+        <div class="question-card">
+          <div class="q-label">🍬 Blood Sugar (Glucose)</div>
+          <div class="q-why"><span>ℹ️</span> PCOS ke saath insulin resistance common hai — blood sugar important indicator hai</div>
+          <div class="input-row" style="margin-top:12px;">
+            <div class="input-group">
+              <label>Fasting Blood Sugar <span class="label-hint">(mg/dL) — Khali pet</span></label>
+              <input type="number" step="0.1" id="fasting_glucose" placeholder="Jaise: 95" oninput="updateLabValue('fasting_glucose', this.value)">
+            </div>
+            <div class="input-group">
+              <label>HbA1c <span class="label-hint">(%)</span></label>
+              <input type="number" step="0.1" id="hba1c" placeholder="Jaise: 5.4" oninput="updateLabValue('hba1c', this.value)">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Navigation -->
+      <div style="display:flex; gap:14px; margin-top:28px;">
+        <button class="btn btn-outline" onclick="goToPage('symptoms.html')">← Back</button>
+        <button class="btn btn-primary" style="flex:1;" onclick="proceedToResults()">
+          Results Dekho →
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    // Show/hide sections
+    function showSection(id) {
+      ['upload-section', 'manual-section'].forEach(s => {
+        document.getElementById(s).classList.toggle('hidden', s !== id);
+      });
+      ['tab-upload', 'tab-manual'].forEach(btn => {
+        document.getElementById(btn)?.classList.remove('btn-primary');
+        document.getElementById(btn)?.classList.add('btn-outline');
+      });
+      const map = { 'upload-section': 'tab-upload', 'manual-section': 'tab-manual' };
+      if (map[id]) {
+        document.getElementById(map[id])?.classList.add('btn-primary');
+        document.getElementById(map[id])?.classList.remove('btn-outline');
+      }
+    }
+
+    function toggleHelp(id) {
+      document.getElementById(id)?.classList.toggle('hidden');
+    }
+
+    function updateLabValue(key, value) {
+      AppState.labValues[key] = parseFloat(value) || null;
+      interpretValue(key, parseFloat(value));
+    }
+
+    // Live interpretation
+    function interpretValue(key, val) {
+      if (isNaN(val)) return;
+      let el, msg, color;
+
+      if (key === 'tsh') {
+        el = document.getElementById('tsh-interpretation');
+        if (val < 0.4) { msg = '⬇️ TSH bahut kam hai — Hyperthyroidism ka sign ho sakta hai. Doctor se milein.'; color = '#FFF3E0'; }
+        else if (val > 4.0 && val <= 10) { msg = '⬆️ TSH thoda zyada hai — Subclinical Hypothyroidism possible. Symptoms check zaroori.'; color = '#FFF8E1'; }
+        else if (val > 10) { msg = '🔴 TSH bahut zyada hai — Hypothyroidism strongly indicated. Doctor se zaroor milein!'; color = '#FFEBEE'; }
+        else { msg = '✅ TSH normal range mein hai (0.4-4.0)'; color = '#E8F5E9'; }
+        if (el) { el.style.background = color; el.textContent = msg; el.classList.remove('hidden'); }
+      }
+
+      if (key === 'hemoglobin') {
+        el = document.getElementById('hb-interpretation');
+        if (val < 8) { msg = '🔴 Hemoglobin bahut kam — Severe Anemia. Turant doctor se milein!'; color = '#FFEBEE'; }
+        else if (val < 10) { msg = '🟠 Hemoglobin kam — Moderate Anemia. Jaldi doctor se milein.'; color = '#FFF3E0'; }
+        else if (val < 12) { msg = '🟡 Hemoglobin thoda kam — Mild Anemia. Monitor karein aur diet sudhaarein.'; color = '#FFF8E1'; }
+        else { msg = '✅ Hemoglobin normal range mein hai (12-16 g/dL)'; color = '#E8F5E9'; }
+        if (el) { el.style.background = color; el.textContent = msg; el.classList.remove('hidden'); }
+      }
+    }
+
+    // File handling
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('upload-zone').classList.add('dragover');
+    }
+    function handleDragLeave(e) {
+      document.getElementById('upload-zone').classList.remove('dragover');
+    }
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('upload-zone').classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file) processFile(file);
+    }
+    function handleFileSelect(input) {
+      if (input.files[0]) processFile(input.files[0]);
+    }
+
+    async function processFile(file) {
+      // Validate type
+      const allowed = ['application/pdf', 'image/jpeg', 'image/png'];
+      if (!allowed.includes(file.type)) {
+        document.getElementById('upload-error').classList.remove('hidden');
+        document.getElementById('error-message').textContent = 
+          'Galat file type! Sirf PDF, JPG ya PNG accept hota hai.';
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        document.getElementById('upload-error').classList.remove('hidden');
+        document.getElementById('error-message').textContent = 'File bahut badi hai! Max 5MB allowed hai.';
+        return;
+      }
+
+      document.getElementById('upload-progress').classList.remove('hidden');
+      document.getElementById('upload-error').classList.add('hidden');
+      document.getElementById('parsed-results').classList.add('hidden');
+
+      // Show processing
+      document.getElementById('upload-status').textContent = 'Report check ho rahi hai...';
+      document.getElementById('upload-detail').textContent = 'File type validate ho rahi hai';
+
+      // Simulate / actual API call
+      try {
+        // Validate filename / content keywords
+        const name = file.name.toLowerCase();
+        const validKeywords = ['cbc', 'thyroid', 'tsh', 'tfT', 'hemoglobin', 'hormone', 'blood', 'lab', 'pathology', 'report'];
+        const suspicious = ['xray', 'x-ray', 'ultrasound', 'usg', 'scan', 'echo', 'prescription'];
+
+        if (suspicious.some(k => name.includes(k))) {
+          throw new Error('Yeh report (X-ray/USG/Prescription) support nahi hoti. Sirf blood test reports accept hoti hain.');
+        }
+
+        document.getElementById('upload-detail').textContent = 'Values extract ho rahi hain...';
+        document.getElementById('upload-icon').textContent = '🔍';
+
+        // Call backend API
+        const result = await API.uploadReport(file);
+
+        if (result && result.success) {
+          showParsedResults(result.values);
+          AppState.labValues = { ...AppState.labValues, ...result.values };
+          AppState.reportUploaded = true;
+        } else {
+          // Show mock parsed for demo
+          showMockParsed();
+        }
+      } catch(err) {
+        document.getElementById('upload-progress').classList.add('hidden');
+        document.getElementById('upload-error').classList.remove('hidden');
+        document.getElementById('error-message').textContent = err.message || 'Report parse nahi ho payi. Values manually bharo.';
+      }
+    }
+
+    function showParsedResults(values) {
+      document.getElementById('upload-progress').classList.add('hidden');
+      document.getElementById('upload-icon').textContent = '✅';
+      const display = document.getElementById('parsed-values-display');
+      display.innerHTML = Object.entries(values)
+        .filter(([k,v]) => v !== null && v !== undefined)
+        .map(([k,v]) => `<div style="padding:6px 0; font-size:14px; border-bottom:1px solid rgba(0,0,0,0.06);">
+          <strong style="text-transform:uppercase; font-size:12px; color:var(--muted)">${k}</strong>: 
+          <strong style="color:var(--charcoal)">${v}</strong>
+        </div>`).join('');
+      document.getElementById('parsed-results').classList.remove('hidden');
+    }
+
+    function showMockParsed() {
+      // Demo only - backend will replace this
+      const mockValues = { TSH: '3.8 mIU/L', Hemoglobin: '10.2 g/dL', MCV: '72 fL' };
+      showParsedResults(mockValues);
+      AppState.labValues = { tsh: 3.8, hemoglobin: 10.2, mcv: 72 };
+    }
+
+    function skipReport() {
+      showToast('Koi baat nahi — report ke bina bhi screening hogi!', '');
+      setTimeout(() => proceedToResults(), 400);
+    }
+
+    function proceedToResults() {
+      try {
+        sessionStorage.setItem('synthera_labs', JSON.stringify(AppState.labValues));
+        sessionStorage.setItem('synthera_report_uploaded', AppState.reportUploaded);
+      } catch(e) {}
+      showToast('Sab taiyaar hai! Results aa rahe hain... 🌸', 'success');
+      setTimeout(() => goToPage('results.html'), 800);
+    }
+
+    // Init
+    showSection('upload-section');
+  </script>
+</body>
+</html>

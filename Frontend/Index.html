@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthera — Aapki Sehat, Aapki Soch</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body data-page="landing">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌸</div>
+      Synthera
+    </a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#conditions">Conditions</a>
+      <a href="#for-whom">Kiske liye?</a>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px;">
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
+        <button class="lang-btn" data-lang="hi">हिंदी</button>
+      </div>
+      <a href="auth.html" class="btn btn-primary btn-sm">Start Free →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span>🌸</span>
+        <span id="hero-badge-text">Hormonal Screening App — Indian Women 30+</span>
+      </div>
+      <h1 class="reveal" style="animation-delay:0.1s">
+        <span id="hero-h1-1">Aapke symptoms,</span><br>
+        <span id="hero-h1-2">ab</span>
+        <span class="accent" id="hero-h1-3"> samjhe jaayenge.</span>
+      </h1>
+      <p class="hero-sub reveal" id="hero-sub" style="animation-delay:0.2s">
+        Thyroid, Anemia aur PCOS ki jaldi pehchaan — designed specially for Indian women 30+. Simple, safe, free.
+      </p>
+      <div class="hero-cta reveal" style="animation-delay:0.35s">
+        <a href="auth.html" class="btn btn-primary btn-lg" id="hero-cta">
+          🩺 Free Screening Shuru Karo
+        </a>
+        <a href="#how-it-works" class="btn btn-outline btn-lg" id="hero-learn">
+          Aur jaano ↓
+        </a>
+      </div>
+
+      <!-- Trust badges -->
+      <div style="display:flex; gap:24px; margin-top:36px; flex-wrap:wrap;" class="reveal" style="animation-delay:0.5s">
+        <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted)">
+          <span style="color:var(--sage)">✅</span> Free to use
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted)">
+          <span style="color:var(--sage)">🔒</span> Data private & secure
+        </div>
+        <div style="display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted)">
+          <span style="color:var(--sage)">🏥</span> Not a diagnosis — early screening
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-illustration">🌸</div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" style="background: var(--warm-white); padding: 80px 0;">
+    <div class="section">
+      <div class="section-tag reveal" id="how-tag">Simple Process</div>
+      <h2 class="reveal" id="how-title">4 aasaan steps mein apni health ka safar</h2>
+      <p class="section-sub reveal" id="how-sub">Koi medical jargon nahi. Koi confusion nahi. Bas simple, caring guidance.</p>
+
+      <div class="steps-grid">
+        <div class="step-card reveal" style="animation-delay:0.05s">
+          <div class="step-num">1</div>
+          <div class="step-icon">✍️</div>
+          <h3>Apne symptoms batao</h3>
+          <p>Jo bhi feel ho raha hai choose karo — thakaan, baal girna, irregular periods, mood changes. Sab kuch.</p>
+        </div>
+        <div class="step-card reveal" style="animation-delay:0.1s">
+          <div class="step-num">2</div>
+          <div class="step-icon">📋</div>
+          <h3>Follow-up questions</h3>
+          <p>Hum aapke answers ke basis pe aur smart questions poochte hain. Jaise — sir dard hai toh kaun si side pe, kitne time se, kitna tez?</p>
+        </div>
+        <div class="step-card reveal" style="animation-delay:0.15s">
+          <div class="step-num">3</div>
+          <div class="step-icon">🧪</div>
+          <h3>Lab report add karo (optional)</h3>
+          <p>Agar blood test ya thyroid test hai, toh report upload karo ya values khud daal do. Isse prediction aur better hogi.</p>
+        </div>
+        <div class="step-card reveal" style="animation-delay:0.2s">
+          <div class="step-num">4</div>
+          <div class="step-icon">📊</div>
+          <h3>Apni personalised report pao</h3>
+          <p>Risk pattern, kyon yeh ho sakta hai, doctor ki advice, precautions — sab ek jagah, simple language mein.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONDITIONS -->
+  <section id="conditions">
+    <div class="section">
+      <div class="section-tag reveal">Hum kya screen karte hain</div>
+      <h2 class="reveal">Teen conditions. Aksar miss hoti hain. Hamesha important.</h2>
+      <p class="section-sub reveal">Yeh teeno conditions ke symptoms overlap karte hain — isiliye akele samajhna mushkil hota hai. Hum sab ko saath dekhte hain.</p>
+
+      <div class="disease-grid">
+        <div class="disease-card reveal" style="animation-delay:0.05s">
+          <div class="disease-icon">🦋</div>
+          <h3 style="color:var(--rose)">Hypothyroidism</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Thyroid gland ki kami se hormonal imbalance</p>
+          <ul>
+            <li><span>Constant thakaan</span></li>
+            <li><span>Weight gain bina wajah</span></li>
+            <li><span>Hamesha thand lagna</span></li>
+            <li><span>Baal patla hona ya girna</span></li>
+            <li><span>Bhoolna / dimag sust rehna</span></li>
+            <li><span>Irregular ya heavy periods</span></li>
+          </ul>
+        </div>
+        <div class="disease-card anemia reveal" style="animation-delay:0.1s">
+          <div class="disease-icon">🩸</div>
+          <h3 style="color:#E53935">Iron Deficiency Anemia</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Khoon mein iron ki kami</p>
+          <ul>
+            <li><span>Kamzori aur saas phoolna</span></li>
+            <li><span>Peela chehra ya nakhun</span></li>
+            <li><span>Sir dard aur chakkar</span></li>
+            <li><span>Baraf / mitti khane ki ichha</span></li>
+            <li><span>Baal girna</span></li>
+            <li><span>Dinbhar thakaan</span></li>
+          </ul>
+        </div>
+        <div class="disease-card pcos reveal" style="animation-delay:0.15s">
+          <div class="disease-icon">🌀</div>
+          <h3 style="color:#8E24AA">PCOS</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Polycystic Ovary Syndrome — hormonal disorder</p>
+          <ul>
+            <li><span>Irregular ya band periods</span></li>
+            <li><span>Chehre / body pe zyada baal</span></li>
+            <li><span>Acne aur oily skin</span></li>
+            <li><span>Pet ke around weight gain</span></li>
+            <li><span>Pregnancy mein mushkil</span></li>
+            <li><span>Mood swings aur anxiety</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Overlap note -->
+      <div style="background: linear-gradient(135deg, var(--rose-pale), var(--turmeric-light)); border-radius: var(--radius); padding: 28px; margin-top: 36px;" class="reveal">
+        <h3 style="font-size:18px; margin-bottom:12px;">⚠️ Overlapping symptoms ka problem</h3>
+        <p style="font-size:14px; color:var(--muted); line-height:1.8">
+          Thakaan, baal girna, aur mood swings — yeh teeno conditions mein ho sakte hain. Yahi wajah hai ki akele ek symptom se kuch nahi samajh aata.
+          <strong style="color:var(--rose)"> Synthera saare symptoms ko saath dekhti hai</strong> — duration, pattern, lab values — aur phir batati hai kis condition ka risk zyada hai.
+          Saath hi, hum yeh bhi batate hain ki agar thyroid ki problem hai toh uske saath aur kaun si minor health risks ho sakti hain.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOR WHOM -->
+  <section id="for-whom" style="background:var(--warm-white); padding:80px 0;">
+    <div class="section">
+      <div class="section-tag reveal">Kiske liye hai?</div>
+      <h2 class="reveal">Aap ke liye bani hai yeh app</h2>
+      <p class="section-sub reveal">Aap doctor ke paas jaane se pehle apne symptoms ko samajhna chahti hain? Bilkul sahi jagah hain.</p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:20px; margin-top:32px;">
+        <div class="step-card reveal">
+          <div class="step-icon">👩</div>
+          <h3>30+ ki Indian women</h3>
+          <p>Jab zindagi mein sab kuch chal raha ho — ghar, kaam, bacche — aur apni sehat ko time nahi milta.</p>
+        </div>
+        <div class="step-card reveal" style="animation-delay:0.1s">
+          <div class="step-icon">🌾</div>
+          <h3>Sabhi ke liye</h3>
+          <p>Padhi-likhi ho ya na ho — app bilkul simple hai. Hindi, Hinglish, English — jo achi lage.</p>
+        </div>
+        <div class="step-card reveal" style="animation-delay:0.15s">
+          <div class="step-icon">⏰</div>
+          <h3>Early detection</h3>
+          <p>Jab symptoms abhi bhi mild hain — tab hi pata karo, doctor ke paas jayein, aur time pe treatment lo.</p>
+        </div>
+        <div class="step-card reveal" style="animation-delay:0.2s">
+          <div class="step-icon">🏥</div>
+          <h3>Doctor supplement</h3>
+          <p>Yeh app doctor ki jagah nahi leti. Yeh aapko doctor ke paas jaane ke liye tayaar karti hai — sahi sawal leke.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section style="padding:80px 40px; text-align:center; background: linear-gradient(135deg, var(--rose), #AD1457); color:white;">
+    <div style="max-width:600px; margin:0 auto;">
+      <div style="font-size:48px; margin-bottom:20px;">🌸</div>
+      <h2 style="color:white; font-size:clamp(28px,4vw,40px); margin-bottom:16px;">
+        Apni sehat ko aaj se samjho
+      </h2>
+      <p style="opacity:0.85; font-size:16px; margin-bottom:36px;">
+        Free hai. Private hai. 10 minute mein ho jaata hai. Aur jo jaanoge — woh bahut important ho sakta hai.
+      </p>
+      <a href="auth.html" class="btn btn-lg" style="background:white; color:var(--rose); font-weight:700;">
+        🩺 Abhi Shuru Karo — Free
+      </a>
+      <p style="font-size:12px; opacity:0.6; margin-top:20px;">
+        ⚠️ Yeh app sirf early screening ke liye hai. Professional medical diagnosis nahi hai.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">🌸 Synthera</div>
+    <p>Team Synthera — Acharya Narendra Dev College<br></p>
+    <p class="disclaimer">
+      Yeh application sirf early hormonal risk screening ke liye hai. Yeh kisi bhi doctor ki salah, medical diagnosis, ya treatment ka badal nahi hai. Kisi bhi health concern ke liye please apne doctor se milein.
+    </p>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    // Hero text update on language change
+    function updatePageText() {
+      const l = AppState.language;
+      const L = LANG[l] || LANG.hinglish;
+      document.getElementById('hero-badge-text').textContent = L.heroBadge?.replace('🌸 ','') || 'Hormonal Screening App';
+      document.getElementById('hero-h1-1').textContent = L.heroH1Line1 || 'Your symptoms,';
+      document.getElementById('hero-h1-2').textContent = L.heroH1Line2 || 'finally';
+      document.getElementById('hero-h1-3').textContent = ' ' + (L.heroH1Accent || 'understood.');
+      document.getElementById('hero-sub').textContent = L.heroSub || '';
+      document.getElementById('hero-cta').textContent = '🩺 ' + (L.heroCTA || 'Start Free Screening');
+      document.getElementById('hero-learn').textContent = (L.heroLearn || 'Learn more') + ' ↓';
+      document.getElementById('how-tag').textContent = L.howTag || 'Simple Process';
+      document.getElementById('how-title').textContent = L.howTitle || '';
+      document.getElementById('how-sub').textContent = L.howSub || '';
+    }
+  </script>
+</body>
+</html>

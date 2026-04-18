@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthera — Aapki Report</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="results">
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌸</div>
+      Synthera
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+    </div>
+    <button class="btn btn-sm btn-outline" onclick="window.print()">🖨️ Print / Save</button>
+  </nav>
+
+  <div class="page-wrapper" style="align-items:flex-start; max-width:780px; margin:0 auto;">
+    <div style="width:100%; padding-top:80px;">
+
+      <!-- Loading state -->
+      <div id="loading-state" style="text-align:center; padding:60px 20px;">
+        <div style="font-size:60px; animation: pulse 1.5s infinite;">🌸</div>
+        <h2 style="margin-top:20px; font-size:22px;">Aapka result taiyaar ho raha hai...</h2>
+        <p style="color:var(--muted); margin-top:8px;">Symptoms, lab values aur patterns analyze kar rahe hain</p>
+        <div class="progress-bar" style="max-width:300px; margin:24px auto;">
+          <div class="progress-fill" id="loading-bar" style="width:0%; transition: width 2s ease;"></div>
+        </div>
+      </div>
+
+      <!-- Results content (hidden until loaded) -->
+      <div id="results-content" class="hidden">
+
+        <!-- Disclaimer -->
+        <div style="background:#FFF3E0; border-radius:var(--radius-sm); padding:14px 18px; margin-bottom:24px; font-size:13px; color:#BF360C; border-left:4px solid #FF6D00;">
+          ⚠️ <strong>Zaroori:</strong> Yeh sirf early screening hai — medical diagnosis NAHI hai. Kripya kisi bhi concern ke liye apne doctor se milein. Yeh app doctor ki jagah nahi le sakti.
+        </div>
+
+        <!-- Primary Result Hero -->
+        <div class="result-hero" id="result-hero">
+          <p style="font-size:14px; opacity:0.8; margin-bottom:8px;">Aapki Screening Report</p>
+          <h2 id="primary-condition-name">Analyzing...</h2>
+          <p id="result-confidence" style="opacity:0.85; font-size:14px; margin-top:8px;"></p>
+          <div class="result-badge" id="risk-level-badge">🔍 Risk Level</div>
+        </div>
+
+        <!-- Why we think this -->
+        <div class="result-card" id="why-section">
+          <h3>💡 Hum yeh kyun soch rahe hain?</h3>
+          <p style="font-size:14px; color:var(--muted); margin-bottom:16px;">
+            Yeh symptoms aur patterns ki wajah se hum is condition ka risk zyada dekh rahe hain:
+          </p>
+          <div id="why-chips" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;"></div>
+          <div id="why-explanation" style="font-size:14px; color:var(--charcoal); line-height:1.8; padding:16px; background:var(--rose-pale); border-radius:var(--radius-sm);"></div>
+        </div>
+
+        <!-- All conditions risk -->
+        <div class="result-card">
+          <h3>📊 Teeno Conditions ka Risk Breakdown</h3>
+          <div id="risk-bars"></div>
+        </div>
+
+        <!-- Overlapping / Minor risks -->
+        <div class="result-card" id="overlap-section">
+          <h3>⚠️ Overlapping Conditions ka Risk</h3>
+          <p style="font-size:14px; color:var(--muted); margin-bottom:16px;">
+            Hormonal imbalance ke saath kuch aur minor conditions ka risk bhi ho sakta hai:
+          </p>
+          <div id="minor-risks"></div>
+        </div>
+
+        <!-- Doctor Recommendation -->
+        <div class="result-card" id="doctor-section">
+          <h3>🏥 Kaunse Doctor se Milein?</h3>
+          <div id="doctor-recommendations"></div>
+          <div class="behavioral-note" style="margin-top:16px;">
+            <strong>💡 Doctor ke paas jaane se pehle:</strong>
+            Apni yeh Synthera report print karein ya screenshot lo. Doctor ko dikhayein — woh aapke symptoms clearly samjhenge.
+          </div>
+        </div>
+
+        <!-- Precautions -->
+        <div class="result-card" id="precautions-section">
+          <h3>🌿 Aap abhi se kya kar sakti hain?</h3>
+          <p style="font-size:14px; color:var(--muted); margin-bottom:16px;">
+            Yeh precautions aur lifestyle changes risk kam karne mein help karte hain — doctor se milne se pehle bhi aur baad mein bhi:
+          </p>
+          <div id="precautions-list"></div>
+        </div>
+
+        <!-- Tests to ask -->
+        <div class="result-card">
+          <h3>🧪 Doctor se yeh tests maangein</h3>
+          <div id="suggested-tests"></div>
+        </div>
+
+        <!-- Behavioral insights (hidden, for backend) -->
+        <div id="behavioral-summary" class="hidden"></div>
+
+        <!-- Actions -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px;">
+          <button class="btn btn-primary btn-full" onclick="window.print()">
+            🖨️ Report Save / Print
+          </button>
+          <button class="btn btn-outline btn-full" onclick="startOver()">
+            🔄 Dobara Shuru Karo
+          </button>
+        </div>
+        <p style="text-align:center; font-size:12px; color:var(--muted); margin-top:12px;">
+          Results share mat karo — yeh sirf aapke liye hai. Doctor se appointment zaroor lo.
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+
+  // ---- RESULTS DATA ----
+  const CONDITION_DATA = {
+    hypothyroidism: {
+      name: { en: "Hypothyroidism", hi: "हाइपोथायरॉइडिज़्म", hinglish: "Hypothyroidism (Thyroid)" },
+      color: "#C2185B",
+      icon: "🦋",
+      doctors: [
+        { type: "Endocrinologist", desc: "Thyroid specialist — primary doctor. 'Endocrinologist' ya 'Thyroidologist' maangein.", urgency: "Pehle isko dikhaayein" },
+        { type: "General Physician", desc: "Agar endocrinologist available nahi — GP se TSH test ka referral lo.", urgency: "Agar jaldi appointment nahi" }
+      ],
+      precautions: [
+        { icon: "🥛", text: "Iodine rich food khao — fish, dairy, iodized salt. Thyroid ke liye zaroori hai." },
+        { icon: "🚫", text: "Soya products, raw cruciferous vegetables (gobi, broccoli) zyada mat khao — thyroid function affect karte hain." },
+        { icon: "💊", text: "Agar doctor ne medicine di hai toh roz ek hi time pe khao, subah khali pet." },
+        { icon: "🏃", text: "Light exercise karo — yoga, walking. Bahut intense exercise thyroid buri tarah affect kar sakti hai." },
+        { icon: "😴", text: "7-8 ghante ki neend lene ki koshish karo — sleep aur thyroid ka seedha connection hai." },
+        { icon: "🌡️", text: "Thand se bachne ke liye layered kapde rakho — hypothyroidism mein cold sensitivity hoti hai." }
+      ],
+      overlapRisks: [
+        { name: "Vitamin D Deficiency", risk: "High", reason: "Thyroid patients mein 80% cases mein Vitamin D kam hoti hai" },
+        { name: "High Cholesterol", risk: "Medium", reason: "Hypothyroidism LDL cholesterol badhata hai" },
+        { name: "Depression / Anxiety", risk: "Medium", reason: "Thyroid hormones directly mood ko affect karte hain" },
+        { name: "Joint Pain", risk: "Low", reason: "Thyroid se muscles aur joints stiff ho sakte hain" }
+      ],
+      tests: ["TSH", "Free T3", "Free T4", "Anti-TPO antibodies", "Vitamin D", "Lipid Profile"],
+      explainSymptoms: {
+        fatigue: "Thyroid hormones metabolism control karte hain — jab kam hote hain, energy production ruk jaata hai",
+        weight_gain: "Slow metabolism ki wajah se calories burn nahi hote, weight badhta jaata hai",
+        cold_hands: "Thyroid heat regulation control karta hai — thand zyada lagti hai",
+        brain_fog: "T3/T4 hormones brain function ke liye zaroori hain — kam hone se sochna mushkil hota hai"
+      }
+    },
+    anemia: {
+      name: { en: "Iron-Deficiency Anemia", hi: "आयरन की कमी (एनीमिया)", hinglish: "Iron Deficiency Anemia" },
+      color: "#E53935",
+      icon: "🩸",
+      doctors: [
+        { type: "General Physician / Family Doctor", desc: "Pehle GP se milein — CBC test likha denge. Simple blood test se confirm ho jaata hai.", urgency: "Pehle isko dikhaayein" },
+        { type: "Hematologist", desc: "Agar severe anemia hai ya treatment kaam nahi kar rahi — blood specialist.", urgency: "Agar GP ke treatment se fark nahi padta" },
+        { type: "Gynecologist", desc: "Agar heavy periods ki wajah se anemia hai — uska treatment bhi zaroori hai.", urgency: "Agar periods bahut heavy hain" }
+      ],
+      precautions: [
+        { icon: "🥩", text: "Iron-rich food khao — red meat, chicken, fish, paalak, rajma, chana, kaju." },
+        { icon: "🍊", text: "Vitamin C ke saath iron absorb hota hai — nimbu paani, orange ke saath iron foods khao." },
+        { icon: "🚫", text: "Chai/coffee iron absorption rokti hai — khana khane ke 1 ghante baad piyo." },
+        { icon: "💊", text: "Doctor ne iron tablets di hain toh roz lo — kabhi kabhi constipation hoti hai, paani zyada piyo." },
+        { icon: "🥬", text: "Paalak, methi, beetroot — daily diet mein shamil karo. Yeh naturally hemoglobin badhate hain." },
+        { icon: "🚗", text: "Gaadi chalate waqt zyada thakaan lagti hai — aram karo, zyada zor mat lagao." }
+      ],
+      overlapRisks: [
+        { name: "Vitamin B12 Deficiency", risk: "High", reason: "Iron aur B12 dono aksar saath mein kam hote hain" },
+        { name: "Folate Deficiency", risk: "Medium", reason: "Iron deficiency anemia ke saath folic acid bhi kam hoti hai" },
+        { name: "Fatigue-related Anxiety", risk: "Medium", reason: "Chronic weakness anxiety aur helplessness create karti hai" },
+        { name: "Poor Immunity", risk: "Low", reason: "Iron immune cells ke liye zaroori hai — kam hone se infections zyada" }
+      ],
+      tests: ["CBC with differentials", "Serum Ferritin", "TIBC", "Serum Iron", "Vitamin B12", "Folate"],
+      explainSymptoms: {
+        weakness: "Red blood cells oxygen carry karte hain — kam hone par muscles mein oxygen nahi pahunchti, kamzori aati hai",
+        breathless: "Oxygen transport affected — thoda kaam karne par bhi saas phool jaati hai",
+        pale_skin: "Hemoglobin rang deta hai khoon ko — kam hone se chehra, nakhun, aur aankhon ke andar peela dikhta hai",
+        dizziness: "Brain ko enough oxygen nahi milti — chakkar, sir dard hota hai"
+      }
+    },
+    pcos: {
+      name: { en: "PCOS", hi: "पीसीओएस (PCOS)", hinglish: "PCOS" },
+      color: "#8E24AA",
+      icon: "🌀",
+      doctors: [
+        { type: "Gynecologist / Obstetrician", desc: "PCOS ke liye pehla doctor — periods, hormones, ovaries check karenge. Ultrasound bhi ho sakta hai.", urgency: "Sabse pehle isko dikhaayein" },
+        { type: "Endocrinologist", desc: "Agar insulin resistance ya thyroid bhi hai saath mein — hormone specialist.", urgency: "Agar weight ya blood sugar bhi issue hai" },
+        { type: "Dermatologist", desc: "Agar acne ya facial hair bahut zyada hai — skin specialist bhi helpful hoga.", urgency: "Optional — skin concern ke liye" }
+      ],
+      precautions: [
+        { icon: "🥗", text: "Low glycemic index (Low-GI) diet follow karo — maida, sugar kam karo. Brown rice, oats, vegetables zyada khao." },
+        { icon: "🏃", text: "30 min ki walking ya yoga roz karo — PCOS mein exercise hormones balance karne ka sabse acha tarika hai." },
+        { icon: "⚖️", text: "5-10% weight kam karna bhi periods regular kar sakta hai — slowly karo, crash diet mat karo." },
+        { icon: "😴", text: "Neend complete lo — 7-8 ghante. PCOS aur sleep ka seedha connection hai." },
+        { icon: "🚫", text: "Processed food, junk food, dairy products zyada mat lo — inflammation badhate hain." },
+        { icon: "🌿", text: "Spearmint chai PCOS mein helpful hoti hai — testosterone thoda kam karta hai. Doctor se poochh ke lo." }
+      ],
+      overlapRisks: [
+        { name: "Type 2 Diabetes Risk", risk: "High", reason: "PCOS patients mein insulin resistance common — 50% cases mein age 40 tak diabetes" },
+        { name: "Sleep Apnea", risk: "Medium", reason: "PCOS mein testosterone zyada hoti hai — sleep apnea risk 5-10x zyada" },
+        { name: "Endometrial Cancer Risk", risk: "Low-Medium", reason: "Irregular periods se endometrium thicken hota hai — long-term monitoring zaroori" },
+        { name: "Cardiovascular Disease", risk: "Medium", reason: "PCOS se lipid profile affect hota hai — heart disease risk 4-7x zyada hoti hai age ke saath" }
+      ],
+      tests: ["LH/FSH ratio", "Testosterone (Total & Free)", "AMH", "Fasting Insulin", "HOMA-IR", "Pelvic Ultrasound", "Prolactin"],
+      explainSymptoms: {
+        irregular_periods: "PCOS mein ovulation irregular hoti hai — eggs proper release nahi hote, periods irregular ya band ho jaate hain",
+        acne: "LH zyada hone se androgen (male hormone) badhta hai — skin oily hoti hai, acne aata hai",
+        facial_hair: "Androgen (testosterone) zyada hone se facial aur body hair badhte hain — isko hirsutism kehte hain",
+        weight_gain: "Insulin resistance ki wajah se body fat store karta hai — especially belly ke around"
+      }
+    }
+  };
+
+  // ---- SCORING LOGIC (client-side demo — replace with backend prediction) ----
+  function calculateRisk() {
+    let scores = { hypothyroidism: 0, anemia: 0, pcos: 0 };
+    const symptoms = AppState.selectedSymptoms;
+    const labs = AppState.labValues;
+    const profile = AppState.profileData;
+    const answers = AppState.subAnswers;
+
+    // Symptom scoring
+    const symptomWeights = {
+      fatigue: { hypothyroidism: 3, anemia: 3, pcos: 2 },
+      hairfall: { hypothyroidism: 4, anemia: 3, pcos: 3 },
+      weakness: { hypothyroidism: 2, anemia: 4, pcos: 1 },
+      irregular_periods: { hypothyroidism: 2, anemia: 1, pcos: 5 },
+      headache: { hypothyroidism: 1, anemia: 3, pcos: 1 },
+      mood_swings: { hypothyroidism: 3, anemia: 1, pcos: 3 },
+      weight_gain: { hypothyroidism: 4, anemia: 0, pcos: 4 },
+      cold_hands: { hypothyroidism: 5, anemia: 1, pcos: 0 },
+      acne: { hypothyroidism: 0, anemia: 0, pcos: 4 },
+      breathless: { hypothyroidism: 1, anemia: 5, pcos: 0 },
+      brain_fog: { hypothyroidism: 4, anemia: 2, pcos: 2 },
+      pale_skin: { hypothyroidism: 0, anemia: 5, pcos: 0 },
+      facial_hair: { hypothyroidism: 0, anemia: 0, pcos: 5 },
+      dizziness: { hypothyroidism: 1, anemia: 4, pcos: 1 },
+      bloating: { hypothyroidism: 2, anemia: 0, pcos: 3 },
+      sleep_issues: { hypothyroidism: 3, anemia: 1, pcos: 3 }
+    };
+
+    symptoms.forEach(s => {
+      if (symptomWeights[s]) {
+        scores.hypothyroidism += symptomWeights[s].hypothyroidism || 0;
+        scores.anemia += symptomWeights[s].anemia || 0;
+        scores.pcos += symptomWeights[s].pcos || 0;
+      }
+    });
+
+    // Duration boost
+    if (answers.duration === '3_6_months' || answers.duration === '6_plus' || answers.duration === 'years') {
+      Object.keys(scores).forEach(k => scores[k] *= 1.3);
+    }
+
+    // Family history
+    if (profile.familyHistory?.includes('thyroid')) scores.hypothyroidism *= 1.5;
+    if (profile.familyHistory?.includes('pcos')) scores.pcos *= 1.4;
+    if (profile.familyHistory?.includes('anemia')) scores.anemia *= 1.3;
+
+    // Lab values
+    if (labs.tsh > 4) scores.hypothyroidism += 15;
+    if (labs.tsh > 10) scores.hypothyroidism += 20;
+    if (labs.hemoglobin < 12) scores.anemia += 20;
+    if (labs.hemoglobin < 10) scores.anemia += 15;
+    if (labs.lh && labs.fsh && labs.lh / labs.fsh > 2) scores.pcos += 20;
+
+    // Normalize to percentage
+    const max = Math.max(...Object.values(scores), 1);
+    return {
+      hypothyroidism: Math.min(Math.round((scores.hypothyroidism / max) * 100), 95),
+      anemia: Math.min(Math.round((scores.anemia / max) * 100), 95),
+      pcos: Math.min(Math.round((scores.pcos / max) * 100), 95),
+      raw: scores
+    };
+  }
+
+  function getRiskLevel(score) {
+    if (score >= 70) return { label: "High Risk", emoji: "🔴", color: "#FFEBEE" };
+    if (score >= 40) return { label: "Moderate Risk", emoji: "🟡", color: "#FFF8E1" };
+    return { label: "Low Risk", emoji: "🟢", color: "#E8F5E9" };
+  }
+
+  // ---- RENDER RESULTS ----
+  function renderResults(risk) {
+    const primary = Object.entries(risk).filter(([k]) => k !== 'raw')
+      .sort((a, b) => b[1] - a[1])[0];
+    const primaryKey = primary[0];
+    const primaryScore = primary[1];
+    const data = CONDITION_DATA[primaryKey];
+    const lang = AppState.language;
+
+    // Hero
+    const riskLevel = getRiskLevel(primaryScore);
+    document.getElementById('result-hero').style.background = `linear-gradient(135deg, ${data.color}, ${data.color}CC)`;
+    document.getElementById('primary-condition-name').textContent = `${data.icon} ${data.name[lang] || data.name.en}`;
+    document.getElementById('result-confidence').textContent = `Aapke symptoms aur pattern se is condition ka risk sabse zyada lagta hai`;
+    const badge = document.getElementById('risk-level-badge');
+    badge.textContent = `${riskLevel.emoji} ${riskLevel.label}`;
+
+    // Why section
+    const whyChips = document.getElementById('why-chips');
+    const symptomsPresent = AppState.selectedSymptoms.filter(s => data.explainSymptoms?.[s]);
+    symptomsPresent.slice(0, 5).forEach(s => {
+      const sym = LANG[lang]?.symptoms?.find(x => x.id === s) || LANG.hinglish.symptoms.find(x => x.id === s);
+      whyChips.innerHTML += `<span class="why-chip">${sym?.icon || '✦'} ${sym?.label || s}</span>`;
+    });
+
+    const whyExp = document.getElementById('why-explanation');
+    const explanations = symptomsPresent.slice(0, 3).map(s => {
+      return `• <strong>${(LANG[lang]?.symptoms?.find(x => x.id === s) || LANG.hinglish.symptoms.find(x => x.id === s))?.label}</strong>: ${data.explainSymptoms[s]}`;
+    }).join('<br>');
+    whyExp.innerHTML = explanations || 'Aapke symptom pattern is condition ke saath align karta hai.';
+
+    // Risk bars
+    const riskBars = document.getElementById('risk-bars');
+    [['hypothyroidism', '🦋'], ['anemia', '🩸'], ['pcos', '🌀']].forEach(([key, icon]) => {
+      const score = risk[key];
+      const rl = getRiskLevel(score);
+      const cd = CONDITION_DATA[key];
+      riskBars.innerHTML += `
+        <div style="margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:14px;">
+            <span>${icon} ${cd.name[lang] || cd.name.en}</span>
+            <span style="font-weight:700; color:${cd.color}">${score}% — ${rl.label}</span>
+          </div>
+          <div style="height:10px; background:var(--border); border-radius:5px; overflow:hidden;">
+            <div style="height:100%; width:${score}%; background:${cd.color}; border-radius:5px; transition:width 1.5s ease;"></div>
+          </div>
+        </div>`;
+    });
+
+    // Minor risks / overlapping
+    const minorContainer = document.getElementById('minor-risks');
+    data.overlapRisks.forEach(r => {
+      const rColor = r.risk === 'High' ? '#FFEBEE' : r.risk === 'Medium' ? '#FFF3E0' : '#E8F5E9';
+      const rText = r.risk === 'High' ? '#C62828' : r.risk === 'Medium' ? '#E65100' : '#2E7D32';
+      minorContainer.innerHTML += `
+        <div class="minor-risk-card" style="background:${rColor}; border-left-color:${rText};">
+          <h4 style="color:${rText}">⚠️ ${r.name} — <em>${r.risk} Risk</em></h4>
+          <p>${r.reason}</p>
+        </div>`;
+    });
+
+    // Doctor recommendations
+    const doctorDiv = document.getElementById('doctor-recommendations');
+    data.doctors.forEach((d, i) => {
+      doctorDiv.innerHTML += `
+        <div style="padding:16px; border-radius:var(--radius-sm); border:1.5px solid var(--border); margin-bottom:12px; ${i===0 ? 'background:var(--rose-pale); border-color:var(--rose-light);' : ''}">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+            <strong style="font-size:15px;">${i===0 ? '🥇' : i===1 ? '🥈' : '🥉'} ${d.type}</strong>
+            <span style="font-size:11px; font-weight:600; background:${i===0?'var(--rose)':'var(--border)'}; color:${i===0?'white':'var(--muted)'}; padding:3px 10px; border-radius:50px;">${d.urgency}</span>
+          </div>
+          <p style="font-size:13px; color:var(--muted);">${d.desc}</p>
+        </div>`;
+    });
+
+    // Precautions
+    const precDiv = document.getElementById('precautions-list');
+    data.precautions.forEach(p => {
+      precDiv.innerHTML += `
+        <div style="display:flex; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); align-items:flex-start;">
+          <span style="font-size:22px; flex-shrink:0">${p.icon}</span>
+          <p style="font-size:14px; color:var(--charcoal)">${p.text}</p>
+        </div>`;
+    });
+
+    // Tests
+    const testsDiv = document.getElementById('suggested-tests');
+    testsDiv.innerHTML = `<div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;">
+      ${data.tests.map(t => `<span class="why-chip">${t}</span>`).join('')}
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:12px;">
+      💡 Yeh tests doctor ko maangein — aur agar thyroid aur anemia dono ka concern hai toh ek comprehensive panel maangein.
+    </p>`;
+
+    // Behavioral summary for backend
+    const bSummary = BehaviorTracker.getSummary();
+    document.getElementById('behavioral-summary').textContent = JSON.stringify(bSummary);
+  }
+
+  // ---- INIT ----
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Load saved data
+    try {
+      const syms = JSON.parse(sessionStorage.getItem('synthera_symptoms') || '{}');
+      if (syms.symptoms) AppState.selectedSymptoms = syms.symptoms;
+      if (syms.answers) AppState.subAnswers = { ...AppState.subAnswers, ...syms.answers };
+      const labs = JSON.parse(sessionStorage.getItem('synthera_labs') || '{}');
+      AppState.labValues = labs;
+      const profile = JSON.parse(sessionStorage.getItem('synthera_profile') || '{}');
+      AppState.profileData = profile;
+    } catch(e) {}
+
+    // Animate loading bar
+    const bar = document.getElementById('loading-bar');
+    setTimeout(() => bar.style.width = '60%', 100);
+    setTimeout(() => bar.style.width = '90%', 1500);
+
+    // Try backend, fallback to client-side
+    let risk;
+    try {
+      const payload = {
+        symptoms: AppState.selectedSymptoms,
+        answers: AppState.subAnswers,
+        profile: AppState.profileData,
+        labs: AppState.labValues,
+        behavioral: BehaviorTracker.getSummary()
+      };
+      const result = await API.predict(payload);
+      if (result && result.risk) {
+        risk = result.risk;
+      } else {
+        risk = calculateRisk();
+      }
+    } catch(e) {
+      risk = calculateRisk();
+    }
+
+    setTimeout(() => {
+      bar.style.width = '100%';
+      setTimeout(() => {
+        document.getElementById('loading-state').classList.add('hidden');
+        document.getElementById('results-content').classList.remove('hidden');
+
+        // Render results
+        if (AppState.selectedSymptoms.length === 0) {
+          // Demo mode
+          AppState.selectedSymptoms = ['fatigue', 'hairfall', 'weight_gain', 'cold_hands', 'brain_fog'];
+          risk = calculateRisk();
+        }
+        renderResults(risk);
+
+        // Animate risk bars
+        setTimeout(() => {
+          document.querySelectorAll('#risk-bars div[style*="width:0"]').forEach(el => {
+            const target = el.dataset.target;
+            if (target) el.style.width = target + '%';
+          });
+        }, 300);
+
+      }, 500);
+    }, 2500);
+  });
+
+  function startOver() {
+    try { sessionStorage.clear(); } catch(e) {}
+    AppState.selectedSymptoms = [];
+    AppState.subAnswers = {};
+    AppState.labValues = {};
+    goToPage('profile.html');
+  }
+
+  </script>
+
+  <style>
+    @media print {
+      .navbar, .lang-switcher, button { display: none !important; }
+      .page-wrapper { padding-top: 20px !important; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+
+</body>
+</html>

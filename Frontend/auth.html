@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthera — Sign In / Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="auth">
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌸</div>
+      Synthera
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="form-card">
+
+      <!-- Logo -->
+      <div style="text-align:center; margin-bottom:28px;">
+        <div style="font-size:48px; margin-bottom:8px;">🌸</div>
+        <h2 id="auth-title" style="font-size:26px; margin-bottom:4px;">Swagat hai!</h2>
+        <p style="font-size:14px; color:var(--muted);" id="auth-sub">Apna account banao ya sign in karo</p>
+      </div>
+
+      <!-- Language note -->
+      <div class="behavioral-note" style="margin-bottom:24px;">
+        <strong>🌐 Language select karo / Select your language:</strong>
+        Upar right mein language button hai — EN, HI-EN (Hinglish), ya हिंदी
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="signin" onclick="switchAuthTab('signin')">
+          Sign In
+        </button>
+        <button class="auth-tab" data-tab="signup" onclick="switchAuthTab('signup')">
+          Sign Up
+        </button>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <div id="signin-form" class="auth-form">
+        <div class="input-group">
+          <label for="signin-email">
+            Email / Phone
+            <span class="label-hint">Aapka email ya phone number</span>
+          </label>
+          <input type="email" id="signin-email" placeholder="aapka@email.com" autocomplete="email">
+        </div>
+        <div class="input-group">
+          <label for="signin-password">
+            Password
+            <span class="label-hint">Aapka password</span>
+          </label>
+          <input type="password" id="signin-password" placeholder="Password daalo" autocomplete="current-password">
+        </div>
+        <div style="text-align:right; margin-bottom:20px;">
+          <a href="#" style="font-size:13px; color:var(--rose);">Password bhool gayi? / Forgot password?</a>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="handleSignIn()">
+          Aage Badho →
+        </button>
+        <p style="text-align:center; margin-top:16px; font-size:13px; color:var(--muted)">
+          Account nahi hai? <a href="#" onclick="switchAuthTab('signup')" style="color:var(--rose); font-weight:600">Sign Up karo</a>
+        </p>
+      </div>
+
+      <!-- SIGN UP FORM -->
+      <div id="signup-form" class="auth-form hidden">
+        <div class="input-group">
+          <label for="signup-name">
+            Aapka Naam / Your Name
+            <span class="label-hint">Pehla naam kaafi hai / First name is fine</span>
+          </label>
+          <input type="text" id="signup-name" placeholder="Aapka naam" autocomplete="name">
+        </div>
+        <div class="input-group">
+          <label for="signup-email">
+            Email
+            <span class="label-hint">Aapka email — result yahan bheja jaayega</span>
+          </label>
+          <input type="email" id="signup-email" placeholder="aapka@email.com" autocomplete="email">
+        </div>
+        <div class="input-group">
+          <label for="signup-phone">
+            Phone (optional)
+            <span class="label-hint">Sirf agar notifications chahiye — zaroori nahi</span>
+          </label>
+          <input type="tel" id="signup-phone" placeholder="10 digit mobile number" autocomplete="tel">
+        </div>
+        <div class="input-group">
+          <label for="signup-password">
+            Password
+            <span class="label-hint">Kam se kam 8 characters — ek number aur ek symbol rakhein</span>
+          </label>
+          <input type="password" id="signup-password" placeholder="Password banao" autocomplete="new-password">
+        </div>
+
+        <!-- Privacy note -->
+        <div style="background:var(--rose-pale); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:20px; font-size:13px; color:var(--muted); line-height:1.7;">
+          🔒 <strong style="color:var(--rose)">Privacy:</strong> Aapka data sirf aapke liye hai. Hum kisi third party ke saath share nahi karte. Yeh app screening ke liye hai, koi permanent medical record nahi banta.
+        </div>
+
+        <div style="display:flex; align-items:flex-start; gap:10px; margin-bottom:24px;">
+          <input type="checkbox" id="agree-terms" style="margin-top:4px; accent-color:var(--rose);">
+          <label for="agree-terms" style="font-size:13px; color:var(--muted); cursor:pointer;">
+            Main samajhti hoon ki yeh <strong>medical diagnosis nahi hai</strong> — sirf early screening hai। Doctor se milna zaroori hai।
+          </label>
+        </div>
+
+        <button class="btn btn-primary btn-full" onclick="handleSignUp()">
+          Account Banao →
+        </button>
+        <p style="text-align:center; margin-top:16px; font-size:13px; color:var(--muted)">
+          Pehle se account hai? <a href="#" onclick="switchAuthTab('signin')" style="color:var(--rose); font-weight:600">Sign In karo</a>
+        </p>
+      </div>
+
+      <div class="divider">ya</div>
+
+      <!-- Guest option -->
+      <button class="btn btn-outline btn-full" onclick="continueAsGuest()" style="font-size:14px;">
+        👤 Bina account ke continue karo (Guest)
+      </button>
+      <p style="text-align:center; font-size:11px; color:var(--muted); margin-top:10px;">
+        Guest mein result save nahi hoga. Account se sab safe rahega.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    function handleSignIn() {
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      if (!email || !password) {
+        showToast('Email aur password dono zaroori hain!', 'error'); return;
+      }
+      // API call placeholder
+      AppState.user = { email, guest: false };
+      showToast('Welcome back! 🌸', 'success');
+      setTimeout(() => goToPage('profile.html'), 800);
+    }
+
+    function handleSignUp() {
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const agreed = document.getElementById('agree-terms').checked;
+
+      if (!name || !email || !password) {
+        showToast('Saari zaroori jankari bharo!', 'error'); return;
+      }
+      if (!agreed) {
+        showToast('Terms agree karna zaroori hai', 'error'); return;
+      }
+      if (password.length < 8) {
+        showToast('Password kam se kam 8 characters ka hona chahiye', 'error'); return;
+      }
+
+      AppState.user = { name, email, guest: false };
+      showToast('Account ban gaya! 🌸', 'success');
+      setTimeout(() => goToPage('profile.html'), 800);
+    }
+
+    function continueAsGuest() {
+      AppState.user = { name: 'Guest', guest: true };
+      showToast('Guest ke taur pe continue kar rahi hain', '');
+      setTimeout(() => goToPage('profile.html'), 600);
+    }
+
+    function updatePageText() {
+      const L = LANG[AppState.language] || LANG.hinglish;
+      document.getElementById('auth-title').textContent = L.welcomeBack || 'Welcome back 🌸';
+    }
+  </script>
+</body>
+</html>

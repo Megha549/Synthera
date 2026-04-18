@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthera — Aapke Symptoms</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="symptoms">
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌸</div>
+      Synthera
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+    </div>
+  </nav>
+
+  <div class="page-wrapper" style="align-items:flex-start; max-width:780px; margin:0 auto;">
+    <div style="width:100%; padding-top:80px;">
+
+      <!-- Progress -->
+      <div class="progress-info">
+        <span>Step 2 of 4 — Symptoms</span>
+        <span>50%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:50%"></div>
+      </div>
+
+      <!-- Phase 1: Select symptoms -->
+      <div id="phase1">
+        <div class="chat-wrapper">
+          <div class="chat-bubble">
+            <strong id="sym-title">Aap kaisi feel kar rahi hain?</strong><br>
+            <span id="sym-sub" style="font-size:14px; opacity:0.8">Jo bhi symptoms hain wo select karo. Ghabrao mat — apna time lo. Ek se zyada choose kar sakti hain.</span>
+          </div>
+        </div>
+
+        <div class="behavioral-note" style="margin-bottom:20px;">
+          <strong>💡 Tip:</strong> Woh symptoms bhi chunein jo "normal" lagti hain — jaise "aise toh hamesha rehta hai". Kabhi kabhi yahi "normal" lagni wali cheezein actually ek pattern ka hissa hoti hain.
+        </div>
+
+        <div class="symptom-grid" id="symptom-grid">
+          <!-- Filled by JS -->
+        </div>
+
+        <!-- Duration -->
+        <div class="question-card" style="margin-top:28px;" id="duration-card">
+          <div class="q-label">🕐 Yeh symptoms kitne time se hain?</div>
+          <div class="q-why"><span>ℹ️</span> Duration bahut important hai — 2 hafte se zyada ke symptoms zyada significant hote hain medically</div>
+          <div class="option-pills" style="margin-top:12px;">
+            <button class="option-pill" onclick="selectDuration(this, 'few_days')">Kuch din se</button>
+            <button class="option-pill" onclick="selectDuration(this, '2_weeks')">2-4 hafte</button>
+            <button class="option-pill" onclick="selectDuration(this, '1_3_months')">1-3 mahine</button>
+            <button class="option-pill" onclick="selectDuration(this, '3_6_months')">3-6 mahine</button>
+            <button class="option-pill" onclick="selectDuration(this, '6_plus')">6 mahine se zyada</button>
+            <button class="option-pill" onclick="selectDuration(this, 'years')">Saalon se</button>
+          </div>
+        </div>
+
+        <!-- Behavioral pattern -->
+        <div class="question-card" id="pattern-card">
+          <div class="q-label">📈 Symptoms badh rahe hain ya ek jaise hain?</div>
+          <div class="q-why"><span>ℹ️</span> Worsening symptoms zyada urgent hoti hain — isse hum priority samajhte hain</div>
+          <div class="option-pills" style="margin-top:12px;">
+            <button class="option-pill" onclick="selectPattern(this, 'worsening')">😰 Badh rahe hain (worse ho rahe)</button>
+            <button class="option-pill" onclick="selectPattern(this, 'same')">↔️ Same hain</button>
+            <button class="option-pill" onclick="selectPattern(this, 'fluctuating')">📊 Kabhi kam kabhi zyada</button>
+            <button class="option-pill" onclick="selectPattern(this, 'improving')">📈 Thoda better ho raha hai</button>
+          </div>
+        </div>
+
+        <!-- Daily life impact -->
+        <div class="question-card" id="impact-card">
+          <div class="q-label">🏠 Yeh symptoms aapki daily life ko kitna affect kar rahi hain?</div>
+          <div class="q-why"><span>ℹ️</span> Isse hum samajhte hain ki aapko doctor se kitni jaldi milna chahiye</div>
+          <div class="option-pills" style="margin-top:12px;">
+            <button class="option-pill" onclick="selectImpact(this, 'none')">✅ Koi fark nahi padta</button>
+            <button class="option-pill" onclick="selectImpact(this, 'mild')">🟡 Thoda affect karta hai</button>
+            <button class="option-pill" onclick="selectImpact(this, 'moderate')">🟠 Kaafi mushkil ho rahi hai</button>
+            <button class="option-pill" onclick="selectImpact(this, 'severe')">🔴 Bahut zyada — kaam mushkil ho raha</button>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg" onclick="proceedToSubQuestions()" style="margin-top:12px;">
+          Follow-up Questions →
+        </button>
+      </div>
+
+      <!-- Phase 2: Adaptive sub-questions -->
+      <div id="phase2" class="hidden">
+        <div class="chat-wrapper" style="margin-bottom:24px;">
+          <div class="chat-bubble">
+            <strong>Ab thoda aur detail mein poochti hoon 🩺</strong><br>
+            <span style="font-size:14px; opacity:0.8">Aapne jo symptoms bataye — unke baare mein kuch aur specific sawaal. Yeh prediction ko accurate banate hain.</span>
+          </div>
+        </div>
+
+        <!-- Sub questions rendered here -->
+        <div id="sub-questions-area"></div>
+
+        <!-- Additional behavioral questions -->
+        <div class="question-card" id="behavioral-questions">
+          <div class="q-label">🧠 Kuch aur important sawaal</div>
+
+          <div style="margin-bottom:20px;">
+            <div class="q-label" style="font-size:14px; margin-bottom:8px;">Appetite (Bhookh) kaisi rehti hai?</div>
+            <div class="q-why"><span>ℹ️</span> Bhookh mein badlaav thyroid aur PCOS dono se related ho sakti hai</div>
+            <div class="option-pills">
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'normal')">🍽️ Normal</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'less')">📉 Kam ho gayi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'more')">📈 Zyada ho gayi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'cravings')">🍰 Meetha ya namkeen khaane ki bahut ichha</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'nausea')">🤢 Ulti/nausea rehti hai</button>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px;">
+            <div class="q-label" style="font-size:14px; margin-bottom:8px;">Exercise ya physical activity kaisi hai?</div>
+            <div class="q-why"><span>ℹ️</span> PCOS ke liye physical activity ek key factor hai</div>
+            <div class="option-pills">
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'regular')">🏃 Regular exercise</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'sometime')">🚶 Kabhi kabhi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'none')">🛋️ Bilkul nahi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'too_tired')">😴 Thakaan ki wajah se nahi kar pati</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="q-label" style="font-size:14px; margin-bottom:8px;">Mood kaisa rehta hai aajkal?</div>
+            <div class="q-why"><span>ℹ️</span> Hormonal changes directly mood aur mental health ko affect karte hain</div>
+            <div class="option-pills">
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'good')">😊 Theek hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'low')">😔 Thoda sad rehta hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'anxious')">😰 Darr ya tension zyada rehti</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'irritable')">😤 Chidchidahat zyada hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'very_low')">😢 Bahut udaas / motivation nahi</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:14px; margin-top:24px;">
+          <button class="btn btn-outline" onclick="backToPhase1()">← Back</button>
+          <button class="btn btn-primary" style="flex:1" onclick="goToReport()">
+            Lab Report / Values →
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      renderSymptomsPage();
+      BehaviorTracker.startPage('symptoms');
+    });
+
+    function selectDuration(btn, val) {
+      btn.closest('.option-pills').querySelectorAll('.option-pill').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      AppState.subAnswers.duration = val;
+    }
+
+    function selectPattern(btn, val) {
+      btn.closest('.option-pills').querySelectorAll('.option-pill').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      AppState.subAnswers.symptomPattern = val;
+    }
+
+    function selectImpact(btn, val) {
+      btn.closest('.option-pills').querySelectorAll('.option-pill').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      AppState.subAnswers.dailyImpact = val;
+    }
+
+    function selectBehavior(btn, key, val) {
+      btn.closest('.option-pills').querySelectorAll('.option-pill').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      AppState.subAnswers[key] = val;
+      BehaviorTracker.recordAnswer(key, val);
+    }
+
+    function proceedToSubQuestions() {
+      if (AppState.selectedSymptoms.length === 0) {
+        showToast('Kam se kam ek symptom choose karo!', 'error'); return;
+      }
+
+      // Build sub-questions area
+      const subArea = document.getElementById('sub-questions-area');
+      subArea.innerHTML = '';
+
+      AppState.selectedSymptoms.forEach(sid => {
+        if (SUB_QUESTIONS[sid]) {
+          const qs = SUB_QUESTIONS[sid][AppState.language] ||
+                     SUB_QUESTIONS[sid].hinglish ||
+                     SUB_QUESTIONS[sid].en;
+          if (!qs) return;
+
+          // Symptom header
+          const header = document.createElement('div');
+          header.style.cssText = 'font-size:13px; font-weight:700; color:var(--rose); margin:20px 0 8px; text-transform:uppercase; letter-spacing:1px;';
+          const sym = LANG[AppState.language]?.symptoms?.find(s => s.id === sid) ||
+                      LANG.hinglish.symptoms.find(s => s.id === sid);
+          header.textContent = `${sym?.icon || '→'} ${sym?.label || sid} ke baare mein:`;
+          subArea.appendChild(header);
+
+          qs.forEach((q, qi) => {
+            const card = document.createElement('div');
+            card.className = 'question-card sub-question';
+            card.style.animationDelay = `${qi * 0.08}s`;
+
+            let inputHtml = '';
+            if (q.type === 'pills') {
+              inputHtml = `<div class="option-pills">
+                ${q.options.map(opt => `
+                  <button class="option-pill" onclick="selectSubOption(this, '${q.id}', '${opt.replace(/'/g,"&#39;")}')">
+                    ${opt}
+                  </button>`).join('')}
+              </div>`;
+            } else if (q.type === 'slider') {
+              const mid = Math.round((q.min + q.max) / 2);
+              inputHtml = `
+                <div class="scale-value" id="val_${q.id}">${mid}</div>
+                <input type="range" class="scale-slider" min="${q.min}" max="${q.max}" value="${mid}"
+                       oninput="updateSlider('${q.id}', this.value)">
+                <div class="scale-labels"><span>${q.min} — Halka</span><span>${q.max} — Bahut zyada</span></div>`;
+            }
+
+            card.innerHTML = `
+              <div class="q-label">↳ ${q.question}</div>
+              <div class="q-why"><span>ℹ️</span> ${q.why}</div>
+              <button class="q-meaning-btn" onclick="toggleMeaning('meaning_${q.id}', '', '${q.id}')">
+                🤔 Matlab kya hai? / What does this mean?
+              </button>
+              <div class="q-meaning-box hidden" id="meaning_${q.id}">${q.meaning}</div>
+              ${inputHtml}
+            `;
+            subArea.appendChild(card);
+          });
+        }
+      });
+
+      document.getElementById('phase1').classList.add('hidden');
+      document.getElementById('phase2').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function backToPhase1() {
+      document.getElementById('phase2').classList.add('hidden');
+      document.getElementById('phase1').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToReport() {
+      // Save all data
+      try {
+        sessionStorage.setItem('synthera_symptoms', JSON.stringify({
+          symptoms: AppState.selectedSymptoms,
+          answers: AppState.subAnswers
+        }));
+        sessionStorage.setItem('synthera_behavioral', JSON.stringify(BehaviorTracker.getSummary()));
+      } catch(e) {}
+      BehaviorTracker.endPage('symptoms');
+      showToast('Symptoms save ho gaye! 🌸', 'success');
+      setTimeout(() => goToPage('report.html'), 600);
+    }
+
+    function updatePageText() {
+      renderSymptomsPage();
+      // Also re-render sub-questions if phase2 is active
+      if (!document.getElementById('phase2').classList.contains('hidden')) {
+        const subArea = document.getElementById('sub-questions-area');
+        subArea.innerHTML = '<p style="color:var(--muted); text-align:center; padding:20px;">Language badli — wapas symptoms select karo</p>';
+        document.getElementById('phase2').classList.add('hidden');
+        document.getElementById('phase1').classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

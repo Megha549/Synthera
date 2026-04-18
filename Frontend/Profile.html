@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synthera — Aapki Jankari</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="profile">
+
+  <nav class="navbar">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">🌸</div>
+      Synthera
+    </a>
+    <div class="lang-switcher">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
+      <button class="lang-btn" data-lang="hi">हिंदी</button>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="form-card wide">
+
+      <!-- Progress -->
+      <div class="progress-info">
+        <span>Step 1 of 4 — Aapki Jankari</span>
+        <span>25%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:25%"></div>
+      </div>
+
+      <div class="form-header">
+        <div style="font-size:40px; margin-bottom:12px;">👩</div>
+        <h2>Pehle thodi jankari de dijiye</h2>
+        <p>Yeh information aapki prediction ko aur accurate banane ke liye zaroori hai. Sab kuch confidential hai.</p>
+      </div>
+
+      <!-- Why we ask -->
+      <div class="behavioral-note" style="margin-bottom:28px;">
+        <strong>💡 Hum yeh kyun pooch rahe hain?</strong>
+        Age, weight aur lifestyle se hormonal risk pattern bahut alag hota hai. Ek 35 saal ki aur ek 50 saal ki aurat ke liye thyroid ka risk alag hota hai. Isliye yeh jankari important hai.
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="age">
+            Aapki Umar / Age
+            <span class="label-hint">Saalon mein / In years</span>
+          </label>
+          <input type="number" id="age" placeholder="Jaise: 35" min="18" max="80">
+        </div>
+        <div class="input-group">
+          <label for="height">
+            Lambai / Height
+            <span class="label-hint">Centimeters mein (jaise 155 cm)</span>
+          </label>
+          <input type="number" id="height" placeholder="Jaise: 155" min="130" max="200">
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="weight">
+            Vajan / Weight
+            <span class="label-hint">Kilograms mein (jaise 60 kg)</span>
+          </label>
+          <input type="number" id="weight" placeholder="Jaise: 60" min="30" max="150">
+        </div>
+        <div class="input-group">
+          <label for="city">
+            Shehar / City
+            <span class="label-hint">Aap kahan rehti hain?</span>
+          </label>
+          <input type="text" id="city" placeholder="Jaise: Delhi, Mumbai">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>
+          Aapki family mein in mein se koi bimari hai?
+          <span class="label-hint">Family history — maata, behen, nani, daadi ke baare mein bhi batayein</span>
+        </label>
+        <div class="option-pills" style="margin-top:8px;">
+          <button class="option-pill" onclick="toggleFamilyHistory(this, 'thyroid')">🦋 Thyroid</button>
+          <button class="option-pill" onclick="toggleFamilyHistory(this, 'diabetes')">🍬 Diabetes</button>
+          <button class="option-pill" onclick="toggleFamilyHistory(this, 'pcos')">🌀 PCOS</button>
+          <button class="option-pill" onclick="toggleFamilyHistory(this, 'anemia')">🩸 Anemia</button>
+          <button class="option-pill" onclick="toggleFamilyHistory(this, 'bp')">❤️ Blood Pressure</button>
+          <button class="option-pill" onclick="toggleFamilyHistory(this, 'none')">✅ Koi nahi / None</button>
+        </div>
+        <div class="q-why" style="margin-top:8px;"><span>ℹ️</span> Family history se risk 2-3x badh sakta hai — especially thyroid aur PCOS ke liye</div>
+      </div>
+
+      <div class="input-group">
+        <label>
+          Kya aap pregnant hain ya recently pregnant thi?
+          <span class="label-hint">Postpartum period (delivery ke baad 1-2 saal) mein hormonal changes normal hain but important hain</span>
+        </label>
+        <div class="option-pills" style="margin-top:8px;">
+          <button class="option-pill" onclick="selectSingle(this, 'pregnancy_status', 'not_pregnant')">Nahi hoon</button>
+          <button class="option-pill" onclick="selectSingle(this, 'pregnancy_status', 'pregnant')">Haan, pregnant hoon</button>
+          <button class="option-pill" onclick="selectSingle(this, 'pregnancy_status', 'postpartum_6m')">Delivery < 6 mahine</button>
+          <button class="option-pill" onclick="selectSingle(this, 'pregnancy_status', 'postpartum_2y')">Delivery 6m-2 saal</button>
+          <button class="option-pill" onclick="selectSingle(this, 'pregnancy_status', 'menopause')">Menopause ho gaya</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>
+          Neend kaisi rehti hai? / Sleep quality?
+          <span class="label-hint">Sleep pattern hormonal health ka ek important indicator hai</span>
+        </label>
+        <div class="option-pills" style="margin-top:8px;">
+          <button class="option-pill" onclick="selectSingle(this, 'sleep', 'good')">😴 Acchi (7-9 ghante)</button>
+          <button class="option-pill" onclick="selectSingle(this, 'sleep', 'less')">⏰ Kam (5-6 ghante)</button>
+          <button class="option-pill" onclick="selectSingle(this, 'sleep', 'poor')">😵 Bahut kharab</button>
+          <button class="option-pill" onclick="selectSingle(this, 'sleep', 'too_much')">🛏️ Bahut zyada neend</button>
+          <button class="option-pill" onclick="selectSingle(this, 'sleep', 'irregular')">🔀 Irregular</button>
+        </div>
+        <div class="q-why" style="margin-top:8px;"><span>ℹ️</span> Bahut zyada neend thyroid ka sign ho sakta hai; neend na aana PCOS ya anxiety se related ho sakta hai</div>
+      </div>
+
+      <div class="input-group">
+        <label>
+          Stress level kaisa hai? / Stress level?
+          <span class="label-hint">Stress directly hormones ko affect karta hai — cortisol badha ke thyroid aur PCOS ko trigger kar sakta hai</span>
+        </label>
+        <div class="scale-value" id="stress-val">5</div>
+        <input type="range" class="scale-slider" id="stress-slider" min="1" max="10" value="5"
+               oninput="document.getElementById('stress-val').textContent = this.value; AppState.profileData.stress = parseInt(this.value);">
+        <div class="scale-labels">
+          <span>1 — Bilkul nahi / None</span>
+          <span>10 — Bahut zyada / Extreme</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>
+          Kya aap koi medicine le rahi hain?
+          <span class="label-hint">Kuch medicines hormones ko directly affect karte hain</span>
+        </label>
+        <div class="option-pills" style="margin-top:8px;">
+          <button class="option-pill" onclick="selectSingle(this, 'medicine', 'none')">✅ Nahi</button>
+          <button class="option-pill" onclick="selectSingle(this, 'medicine', 'thyroid_med')">🦋 Thyroid medicine</button>
+          <button class="option-pill" onclick="selectSingle(this, 'medicine', 'contraceptive')">💊 Contraceptive pill</button>
+          <button class="option-pill" onclick="selectSingle(this, 'medicine', 'iron')">🩸 Iron tablets</button>
+          <button class="option-pill" onclick="selectSingle(this, 'medicine', 'other')">💊 Kuch aur</button>
+          <button class="option-pill" onclick="selectSingle(this, 'medicine', 'unsure')">🤷 Pata nahi</button>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:14px; margin-top:32px;">
+        <button class="btn btn-outline" onclick="goToPage('auth.html')">← Back</button>
+        <button class="btn btn-primary" style="flex:1" onclick="saveAndContinue()">
+          Symptoms Batao → 
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+  <script>
+    const familyHistory = new Set();
+    const singleSelects = {};
+
+    function toggleFamilyHistory(btn, value) {
+      if (value === 'none') {
+        familyHistory.clear();
+        document.querySelectorAll('.option-pill[data-fam]').forEach(b => b.classList.remove('selected'));
+        familyHistory.add('none');
+      } else {
+        familyHistory.delete('none');
+        if (familyHistory.has(value)) familyHistory.delete(value);
+        else familyHistory.add(value);
+      }
+      // Mark the clicked button
+      document.querySelectorAll('.option-pill').forEach(b => {
+        if (b.getAttribute('onclick')?.includes('toggleFamilyHistory')) {
+          const v = b.getAttribute('onclick').match(/'([^']+)'\)$/)?.[1];
+          if (v) b.classList.toggle('selected', familyHistory.has(v));
+        }
+      });
+      AppState.profileData.familyHistory = [...familyHistory];
+    }
+
+    function selectSingle(btn, key, value) {
+      // Deselect others in same group
+      document.querySelectorAll(`.option-pill`).forEach(b => {
+        if (b.getAttribute('onclick')?.includes(`'${key}'`)) b.classList.remove('selected');
+      });
+      btn.classList.add('selected');
+      singleSelects[key] = value;
+      AppState.profileData[key] = value;
+    }
+
+    function saveAndContinue() {
+      const age = document.getElementById('age').value;
+      const height = document.getElementById('height').value;
+      const weight = document.getElementById('weight').value;
+
+      if (!age || !height || !weight) {
+        showToast('Umar, lambai aur vajan zaroori hai!', 'error'); return;
+      }
+
+      AppState.profileData = {
+        ...AppState.profileData,
+        age: parseInt(age),
+        height: parseInt(height),
+        weight: parseInt(weight),
+        city: document.getElementById('city').value,
+        bmi: (parseInt(weight) / Math.pow(parseInt(height)/100, 2)).toFixed(1),
+        stress: parseInt(document.getElementById('stress-slider').value),
+        familyHistory: [...familyHistory],
+        ...singleSelects
+      };
+
+      saveProfile(AppState.profileData);
+      BehaviorTracker.endPage('profile');
+      showToast('Jankari save ho gayi! 🌸', 'success');
+      setTimeout(() => goToPage('symptoms.html'), 600);
+    }
+  </script>
+</body>
+</html>
