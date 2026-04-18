@@ -51,7 +51,7 @@
 
         <!-- Duration -->
         <div class="question-card" style="margin-top:28px;" id="duration-card">
-          <div class="q-label">🕐 Yeh symptoms kitne time se hain?</div>
+          <div class="q-label"> Yeh symptoms kitne time se hain?</div>
           <div class="q-why"><span>ℹ️</span> Duration bahut important hai — 2 hafte se zyada ke symptoms zyada significant hote hain medically</div>
           <div class="option-pills" style="margin-top:12px;">
             <button class="option-pill" onclick="selectDuration(this, 'few_days')">Kuch din se</button>
@@ -65,25 +65,25 @@
 
         <!-- Behavioral pattern -->
         <div class="question-card" id="pattern-card">
-          <div class="q-label">📈 Symptoms badh rahe hain ya ek jaise hain?</div>
+          <div class="q-label">Symptoms badh rahe hain ya ek jaise hain?</div>
           <div class="q-why"><span>ℹ️</span> Worsening symptoms zyada urgent hoti hain — isse hum priority samajhte hain</div>
           <div class="option-pills" style="margin-top:12px;">
-            <button class="option-pill" onclick="selectPattern(this, 'worsening')">😰 Badh rahe hain (worse ho rahe)</button>
+            <button class="option-pill" onclick="selectPattern(this, 'worsening')">Badh rahe hain (worse ho rahe)</button>
             <button class="option-pill" onclick="selectPattern(this, 'same')">↔️ Same hain</button>
-            <button class="option-pill" onclick="selectPattern(this, 'fluctuating')">📊 Kabhi kam kabhi zyada</button>
-            <button class="option-pill" onclick="selectPattern(this, 'improving')">📈 Thoda better ho raha hai</button>
+            <button class="option-pill" onclick="selectPattern(this, 'fluctuating')">Kabhi kam kabhi zyada</button>
+            <button class="option-pill" onclick="selectPattern(this, 'improving')">Thoda better ho raha hai</button>
           </div>
         </div>
 
         <!-- Daily life impact -->
         <div class="question-card" id="impact-card">
-          <div class="q-label">🏠 Yeh symptoms aapki daily life ko kitna affect kar rahi hain?</div>
+          <div class="q-label"> Yeh symptoms aapki daily life ko kitna affect kar rahi hain?</div>
           <div class="q-why"><span>ℹ️</span> Isse hum samajhte hain ki aapko doctor se kitni jaldi milna chahiye</div>
           <div class="option-pills" style="margin-top:12px;">
-            <button class="option-pill" onclick="selectImpact(this, 'none')">✅ Koi fark nahi padta</button>
-            <button class="option-pill" onclick="selectImpact(this, 'mild')">🟡 Thoda affect karta hai</button>
-            <button class="option-pill" onclick="selectImpact(this, 'moderate')">🟠 Kaafi mushkil ho rahi hai</button>
-            <button class="option-pill" onclick="selectImpact(this, 'severe')">🔴 Bahut zyada — kaam mushkil ho raha</button>
+            <button class="option-pill" onclick="selectImpact(this, 'none')">Koi fark nahi padta</button>
+            <button class="option-pill" onclick="selectImpact(this, 'mild')"> Thoda affect karta hai</button>
+            <button class="option-pill" onclick="selectImpact(this, 'moderate')"> Kaafi mushkil ho rahi hai</button>
+            <button class="option-pill" onclick="selectImpact(this, 'severe')"> Bahut zyada — kaam mushkil ho raha</button>
           </div>
         </div>
 
@@ -106,17 +106,17 @@
 
         <!-- Additional behavioral questions -->
         <div class="question-card" id="behavioral-questions">
-          <div class="q-label">🧠 Kuch aur important sawaal</div>
+          <div class="q-label"> Kuch aur important sawaal</div>
 
           <div style="margin-bottom:20px;">
             <div class="q-label" style="font-size:14px; margin-bottom:8px;">Appetite (Bhookh) kaisi rehti hai?</div>
             <div class="q-why"><span>ℹ️</span> Bhookh mein badlaav thyroid aur PCOS dono se related ho sakti hai</div>
             <div class="option-pills">
-              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'normal')">🍽️ Normal</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'less')">📉 Kam ho gayi</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'more')">📈 Zyada ho gayi</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'cravings')">🍰 Meetha ya namkeen khaane ki bahut ichha</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'nausea')">🤢 Ulti/nausea rehti hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'normal')"> Normal</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'less')"> Kam ho gayi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'more')"> Zyada ho gayi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'cravings')"> Meetha ya namkeen khaane ki bahut ichha</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'appetite', 'nausea')"> Ulti/nausea rehti hai</button>
             </div>
           </div>
 
@@ -124,10 +124,10 @@
             <div class="q-label" style="font-size:14px; margin-bottom:8px;">Exercise ya physical activity kaisi hai?</div>
             <div class="q-why"><span>ℹ️</span> PCOS ke liye physical activity ek key factor hai</div>
             <div class="option-pills">
-              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'regular')">🏃 Regular exercise</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'sometime')">🚶 Kabhi kabhi</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'none')">🛋️ Bilkul nahi</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'too_tired')">😴 Thakaan ki wajah se nahi kar pati</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'regular')">Regular exercise</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'sometime')">Kabhi kabhi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'none')">Bilkul nahi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'exercise', 'too_tired')">Thakaan ki wajah se nahi kar pati</button>
             </div>
           </div>
 
@@ -135,11 +135,11 @@
             <div class="q-label" style="font-size:14px; margin-bottom:8px;">Mood kaisa rehta hai aajkal?</div>
             <div class="q-why"><span>ℹ️</span> Hormonal changes directly mood aur mental health ko affect karte hain</div>
             <div class="option-pills">
-              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'good')">😊 Theek hai</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'low')">😔 Thoda sad rehta hai</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'anxious')">😰 Darr ya tension zyada rehti</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'irritable')">😤 Chidchidahat zyada hai</button>
-              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'very_low')">😢 Bahut udaas / motivation nahi</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'good')">Theek hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'low')">Thoda sad rehta hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'anxious')">Darr ya tension zyada rehti</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'irritable')">Chidchidahat zyada hai</button>
+              <button class="option-pill" onclick="selectBehavior(this, 'mood', 'very_low')">Bahut udaas / motivation nahi</button>
             </div>
           </div>
         </div>
@@ -239,7 +239,7 @@
               <div class="q-label">↳ ${q.question}</div>
               <div class="q-why"><span>ℹ️</span> ${q.why}</div>
               <button class="q-meaning-btn" onclick="toggleMeaning('meaning_${q.id}', '', '${q.id}')">
-                🤔 Matlab kya hai? / What does this mean?
+                 Matlab kya hai? / What does this mean?
               </button>
               <div class="q-meaning-box hidden" id="meaning_${q.id}">${q.meaning}</div>
               ${inputHtml}

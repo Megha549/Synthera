@@ -18,7 +18,7 @@
       <button class="lang-btn active" data-lang="hinglish">HI-EN</button>
       <button class="lang-btn" data-lang="hi">हिंदी</button>
     </div>
-    <button class="btn btn-sm btn-outline" onclick="window.print()">🖨️ Print / Save</button>
+    <button class="btn btn-sm btn-outline" onclick="window.print()">Print / Save</button>
   </nav>
 
   <div class="page-wrapper" style="align-items:flex-start; max-width:780px; margin:0 auto;">
@@ -62,7 +62,7 @@
 
         <!-- All conditions risk -->
         <div class="result-card">
-          <h3>📊 Teeno Conditions ka Risk Breakdown</h3>
+          <h3> Teeno Conditions ka Risk Breakdown</h3>
           <div id="risk-bars"></div>
         </div>
 
@@ -77,10 +77,10 @@
 
         <!-- Doctor Recommendation -->
         <div class="result-card" id="doctor-section">
-          <h3>🏥 Kaunse Doctor se Milein?</h3>
+          <h3> Kaunse Doctor se Milein?</h3>
           <div id="doctor-recommendations"></div>
           <div class="behavioral-note" style="margin-top:16px;">
-            <strong>💡 Doctor ke paas jaane se pehle:</strong>
+            <strong> Doctor ke paas jaane se pehle:</strong>
             Apni yeh Synthera report print karein ya screenshot lo. Doctor ko dikhayein — woh aapke symptoms clearly samjhenge.
           </div>
         </div>
@@ -129,18 +129,17 @@
     hypothyroidism: {
       name: { en: "Hypothyroidism", hi: "हाइपोथायरॉइडिज़्म", hinglish: "Hypothyroidism (Thyroid)" },
       color: "#C2185B",
-      icon: "🦋",
       doctors: [
         { type: "Endocrinologist", desc: "Thyroid specialist — primary doctor. 'Endocrinologist' ya 'Thyroidologist' maangein.", urgency: "Pehle isko dikhaayein" },
         { type: "General Physician", desc: "Agar endocrinologist available nahi — GP se TSH test ka referral lo.", urgency: "Agar jaldi appointment nahi" }
       ],
       precautions: [
-        { icon: "🥛", text: "Iodine rich food khao — fish, dairy, iodized salt. Thyroid ke liye zaroori hai." },
-        { icon: "🚫", text: "Soya products, raw cruciferous vegetables (gobi, broccoli) zyada mat khao — thyroid function affect karte hain." },
-        { icon: "💊", text: "Agar doctor ne medicine di hai toh roz ek hi time pe khao, subah khali pet." },
-        { icon: "🏃", text: "Light exercise karo — yoga, walking. Bahut intense exercise thyroid buri tarah affect kar sakti hai." },
-        { icon: "😴", text: "7-8 ghante ki neend lene ki koshish karo — sleep aur thyroid ka seedha connection hai." },
-        { icon: "🌡️", text: "Thand se bachne ke liye layered kapde rakho — hypothyroidism mein cold sensitivity hoti hai." }
+        {  text: "Iodine rich food khao — fish, dairy, iodized salt. Thyroid ke liye zaroori hai." },
+        {  text: "Soya products, raw cruciferous vegetables (gobi, broccoli) zyada mat khao — thyroid function affect karte hain." },
+        {  text: "Agar doctor ne medicine di hai toh roz ek hi time pe khao, subah khali pet." },
+        {  text: "Light exercise karo — yoga, walking. Bahut intense exercise thyroid buri tarah affect kar sakti hai." },
+        {  text: "7-8 ghante ki neend lene ki koshish karo — sleep aur thyroid ka seedha connection hai." },
+        {  text: "Thand se bachne ke liye layered kapde rakho — hypothyroidism mein cold sensitivity hoti hai." }
       ],
       overlapRisks: [
         { name: "Vitamin D Deficiency", risk: "High", reason: "Thyroid patients mein 80% cases mein Vitamin D kam hoti hai" },
@@ -159,19 +158,18 @@
     anemia: {
       name: { en: "Iron-Deficiency Anemia", hi: "आयरन की कमी (एनीमिया)", hinglish: "Iron Deficiency Anemia" },
       color: "#E53935",
-      icon: "🩸",
       doctors: [
         { type: "General Physician / Family Doctor", desc: "Pehle GP se milein — CBC test likha denge. Simple blood test se confirm ho jaata hai.", urgency: "Pehle isko dikhaayein" },
         { type: "Hematologist", desc: "Agar severe anemia hai ya treatment kaam nahi kar rahi — blood specialist.", urgency: "Agar GP ke treatment se fark nahi padta" },
         { type: "Gynecologist", desc: "Agar heavy periods ki wajah se anemia hai — uska treatment bhi zaroori hai.", urgency: "Agar periods bahut heavy hain" }
       ],
       precautions: [
-        { icon: "🥩", text: "Iron-rich food khao — red meat, chicken, fish, paalak, rajma, chana, kaju." },
-        { icon: "🍊", text: "Vitamin C ke saath iron absorb hota hai — nimbu paani, orange ke saath iron foods khao." },
-        { icon: "🚫", text: "Chai/coffee iron absorption rokti hai — khana khane ke 1 ghante baad piyo." },
-        { icon: "💊", text: "Doctor ne iron tablets di hain toh roz lo — kabhi kabhi constipation hoti hai, paani zyada piyo." },
-        { icon: "🥬", text: "Paalak, methi, beetroot — daily diet mein shamil karo. Yeh naturally hemoglobin badhate hain." },
-        { icon: "🚗", text: "Gaadi chalate waqt zyada thakaan lagti hai — aram karo, zyada zor mat lagao." }
+        {  text: "Iron-rich food khao — red meat, chicken, fish, paalak, rajma, chana, kaju." },
+        {  text: "Vitamin C ke saath iron absorb hota hai — nimbu paani, orange ke saath iron foods khao." },
+        {  text: "Chai/coffee iron absorption rokti hai — khana khane ke 1 ghante baad piyo." },
+        {  text: "Doctor ne iron tablets di hain toh roz lo — kabhi kabhi constipation hoti hai, paani zyada piyo." },
+        {  text: "Paalak, methi, beetroot — daily diet mein shamil karo. Yeh naturally hemoglobin badhate hain." },
+        {  text: "Gaadi chalate waqt zyada thakaan lagti hai — aram karo, zyada zor mat lagao." }
       ],
       overlapRisks: [
         { name: "Vitamin B12 Deficiency", risk: "High", reason: "Iron aur B12 dono aksar saath mein kam hote hain" },
@@ -190,19 +188,18 @@
     pcos: {
       name: { en: "PCOS", hi: "पीसीओएस (PCOS)", hinglish: "PCOS" },
       color: "#8E24AA",
-      icon: "🌀",
       doctors: [
         { type: "Gynecologist / Obstetrician", desc: "PCOS ke liye pehla doctor — periods, hormones, ovaries check karenge. Ultrasound bhi ho sakta hai.", urgency: "Sabse pehle isko dikhaayein" },
         { type: "Endocrinologist", desc: "Agar insulin resistance ya thyroid bhi hai saath mein — hormone specialist.", urgency: "Agar weight ya blood sugar bhi issue hai" },
         { type: "Dermatologist", desc: "Agar acne ya facial hair bahut zyada hai — skin specialist bhi helpful hoga.", urgency: "Optional — skin concern ke liye" }
       ],
       precautions: [
-        { icon: "🥗", text: "Low glycemic index (Low-GI) diet follow karo — maida, sugar kam karo. Brown rice, oats, vegetables zyada khao." },
-        { icon: "🏃", text: "30 min ki walking ya yoga roz karo — PCOS mein exercise hormones balance karne ka sabse acha tarika hai." },
-        { icon: "⚖️", text: "5-10% weight kam karna bhi periods regular kar sakta hai — slowly karo, crash diet mat karo." },
-        { icon: "😴", text: "Neend complete lo — 7-8 ghante. PCOS aur sleep ka seedha connection hai." },
-        { icon: "🚫", text: "Processed food, junk food, dairy products zyada mat lo — inflammation badhate hain." },
-        { icon: "🌿", text: "Spearmint chai PCOS mein helpful hoti hai — testosterone thoda kam karta hai. Doctor se poochh ke lo." }
+        {  text: "Low glycemic index (Low-GI) diet follow karo — maida, sugar kam karo. Brown rice, oats, vegetables zyada khao." },
+        {  text: "30 min ki walking ya yoga roz karo — PCOS mein exercise hormones balance karne ka sabse acha tarika hai." },
+        {  text: "5-10% weight kam karna bhi periods regular kar sakta hai — slowly karo, crash diet mat karo." },
+        {  text: "Neend complete lo — 7-8 ghante. PCOS aur sleep ka seedha connection hai." },
+        {  text: "Processed food, junk food, dairy products zyada mat lo — inflammation badhate hain." },
+        {  text: "Spearmint chai PCOS mein helpful hoti hai — testosterone thoda kam karta hai. Doctor se poochh ke lo." }
       ],
       overlapRisks: [
         { name: "Type 2 Diabetes Risk", risk: "High", reason: "PCOS patients mein insulin resistance common — 50% cases mein age 40 tak diabetes" },

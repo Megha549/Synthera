@@ -34,7 +34,7 @@
 
       <div class="chat-wrapper" style="margin-bottom:28px;">
         <div class="chat-bubble">
-          <strong>Ab lab report ki bari 🧪</strong><br>
+          <strong>Ab lab report ki bari </strong><br>
           <span style="font-size:14px; opacity:0.8">Agar aapke paas koi blood test ya thyroid test ki report hai — woh upload karein ya values manually bhar dein. <strong>Yeh completely optional hai</strong> — report nahi hai toh seedha next step pe ja sakti hain.</span>
         </div>
       </div>
@@ -52,7 +52,7 @@
           📄 Report Upload Karo
         </button>
         <button class="btn btn-outline" onclick="showSection('manual-section')" id="tab-manual">
-          ✏️ Values Khud Bharo
+           Values Khud Bharo
         </button>
         <button class="btn btn-soft" onclick="skipReport()">
           ⏭️ Skip — Report Nahi Hai
@@ -67,8 +67,8 @@
           <h3>Report yahan drag karo ya click karke upload karo</h3>
           <p style="margin-top:8px;">Sirf PDF ya image file (JPG, PNG) — max 5MB</p>
           <p style="margin-top:6px; font-size:12px; color:var(--rose);">
-            ✅ Accept: CBC, TFT, TSH, T3/T4, Hormone Panel<br>
-            ❌ Not accepted: X-ray, USG, prescriptions, general health checkup
+             Accept: CBC, TFT, TSH, T3/T4, Hormone Panel<br>
+             Not accepted: X-ray, USG, prescriptions, general health checkup
           </p>
           <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png" onchange="handleFileSelect(this)">
         </div>
@@ -76,7 +76,7 @@
         <!-- Upload progress -->
         <div id="upload-progress" class="hidden" style="margin-top:20px;">
           <div style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--rose-pale); border-radius:var(--radius-sm);">
-            <span id="upload-icon" style="font-size:24px;">⏳</span>
+            <span id="upload-icon" style="font-size:24px;"></span>
             <div>
               <div id="upload-status" style="font-weight:600; font-size:14px;">Report upload ho rahi hai...</div>
               <div id="upload-detail" style="font-size:12px; color:var(--muted);">Please wait</div>
@@ -103,7 +103,7 @@
               Yeh report recognize nahi hui. Kripya sirf CBC, TFT, ya Hormone Panel upload karein, ya values manually bharein.
             </p>
             <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="showSection('manual-section')">
-              ✏️ Manually Values Bharo
+               Manually Values Bharo
             </button>
           </div>
         </div>
@@ -119,7 +119,7 @@
 
         <!-- Thyroid Section -->
         <div class="question-card">
-          <div class="q-label">🦋 Thyroid Tests</div>
+          <div class="q-label"> Thyroid Tests</div>
           <div class="q-why"><span>ℹ️</span> TSH (Thyroid Stimulating Hormone) — normal range: 0.4 to 4.0 mIU/L</div>
           <button class="q-meaning-btn" onclick="toggleHelp('help-thyroid')">🤔 Yeh tests kaise pehchanu?</button>
           <div class="q-meaning-box hidden" id="help-thyroid">
@@ -151,7 +151,7 @@
 
         <!-- Blood / CBC Section -->
         <div class="question-card">
-          <div class="q-label">🩸 Blood Tests (CBC)</div>
+          <div class="q-label"> Blood Tests (CBC)</div>
           <div class="q-why"><span>ℹ️</span> Hemoglobin se anemia pata chalta hai — women ke liye normal: 12.0-16.0 g/dL</div>
           <button class="q-meaning-btn" onclick="toggleHelp('help-cbc')">🤔 CBC mein kya hota hai?</button>
           <div class="q-meaning-box hidden" id="help-cbc">
@@ -187,7 +187,7 @@
 
         <!-- Hormone Section -->
         <div class="question-card">
-          <div class="q-label">🌀 Hormone Tests (PCOS ke liye)</div>
+          <div class="q-label"> Hormone Tests (PCOS ke liye)</div>
           <div class="q-why"><span>ℹ️</span> LH/FSH ratio aur testosterone PCOS diagnose karne mein help karte hain</div>
           <button class="q-meaning-btn" onclick="toggleHelp('help-hormones')">🤔 Yeh tests kahan milte hain report mein?</button>
           <div class="q-meaning-box hidden" id="help-hormones">
@@ -222,7 +222,7 @@
 
         <!-- Blood Sugar -->
         <div class="question-card">
-          <div class="q-label">🍬 Blood Sugar (Glucose)</div>
+          <div class="q-label"> Blood Sugar (Glucose)</div>
           <div class="q-why"><span>ℹ️</span> PCOS ke saath insulin resistance common hai — blood sugar important indicator hai</div>
           <div class="input-row" style="margin-top:12px;">
             <div class="input-group">
